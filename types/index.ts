@@ -36,7 +36,7 @@ export interface Profile {
     | 'blue-cyan';
   avatarInitials: string;
   twitter?: string;
-  discord?: string;
+  tradingView?: string;
 }
 
 export interface Module {

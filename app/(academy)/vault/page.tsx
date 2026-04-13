@@ -168,16 +168,16 @@ export default function VaultPage() {
           </div>
 
           {/* Socials */}
-          {(profile.twitter || profile.discord) && (
+          {(profile.twitter || profile.tradingView) && (
             <div style={{ display: 'flex', gap: 8, marginTop: 18, flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
               {profile.twitter && (
                 <span style={{ padding: '6px 10px', fontSize: 11, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', borderRadius: 4, color: 'var(--text-secondary)', fontFamily: "'JetBrains Mono', monospace" }}>
                   𝕏 {profile.twitter}
                 </span>
               )}
-              {profile.discord && (
+              {profile.tradingView && (
                 <span style={{ padding: '6px 10px', fontSize: 11, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', borderRadius: 4, color: 'var(--text-secondary)', fontFamily: "'JetBrains Mono', monospace" }}>
-                  ⚡ {profile.discord}
+                  📈 {profile.tradingView}
                 </span>
               )}
             </div>

@@ -8,7 +8,7 @@ const DEFAULT_PROFILE: Profile = {
   avatarBg: 'cyan-purple',
   avatarInitials: 'CL',
   twitter: '@clutch_novex',
-  discord: 'clutch#0001',
+  tradingView: '',
 };
 
 interface ProfileStore {

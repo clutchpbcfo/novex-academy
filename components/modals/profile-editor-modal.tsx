@@ -200,7 +200,7 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
             />
           </div>
 
-          {/* Twitter / Discord */}
+          {/* Twitter / TradingView */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
             <div>
               <label style={labelStyle}>{t('vault.edit.twitter')}</label>
@@ -214,15 +214,16 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
               />
             </div>
             <div>
-              <label style={labelStyle}>{t('vault.edit.discord')}</label>
+              <label style={labelStyle}>{t('vault.edit.tradingView')}</label>
               <input
                 style={inputStyle}
-                value={form.discord ?? ''}
-                placeholder="user#0000"
-                onChange={(e) => setForm((f) => ({ ...f, discord: e.target.value }))}
+                value={form.tradingView ?? ''}
+                placeholder="TV username"
+                onChange={(e) => setForm((f) => ({ ...f, tradingView: e.target.value }))}
                 onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
               />
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>For private indicator access</div>
             </div>
           </div>
 
