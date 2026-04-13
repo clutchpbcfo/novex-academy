@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { MODULES } from '@/lib/data/modules';
 import { useProgressStore } from '@/lib/state/use-progress-store';
+import { ExamView } from '@/components/academy/exam-view';
 
 export default function LessonPage() {
   const t = useTranslations();
@@ -17,19 +18,32 @@ export default function LessonPage() {
   const lessonIdx = parseInt(lessonId);
   const mod = MODULES.find((m) => m.id === modIdx);
   const [quizAnswer, setQuizAnswer] = useState<number | null>(null);
+  const [examMode, setExamMode] = useState(false);
 
   if (!mod || lessonIdx < 0 || lessonIdx >= mod.items.length) {
     router.push('/academy');
     return null;
   }
 
+  // Module 5 — Graduation: render ExamView when user clicks BEGIN
+  if (examMode) {
+    return (
+      <ExamView
+        onExit={() => {
+          setExamMode(false);
+          router.push('/academy/5');
+        }}
+      />
+    );
+  }
+
   const lesson = mod.items[lessonIdx];
   const hasNext = lessonIdx < mod.items.length - 1;
   const hasPrev = lessonIdx > 0;
+  const isLastLesson = lessonIdx === mod.items.length - 1;
 
   function handleComplete() {
     markComplete(`${modIdx}-${lessonIdx}`);
-    // Persist to API
     fetch('/api/progress', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -50,7 +64,16 @@ export default function LessonPage() {
     <div style={{ maxWidth: 1340, margin: '0 auto', padding: '32px 28px 80px' }}>
       <Link
         href={`/academy/${modIdx}`}
-        style={{ color: 'var(--text-secondary)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none', display: 'inline-block', marginBottom: 24 }}
+        style={{
+          color: 'var(--text-secondary)',
+          fontSize: 12,
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          textDecoration: 'none',
+          display: 'inline-block',
+          marginBottom: 24,
+        }}
       >
         {t('academy.backTo')} {mod.title}
       </Link>
@@ -65,10 +88,26 @@ export default function LessonPage() {
           margin: '0 auto',
         }}
       >
-        <div style={{ fontSize: 11, color: 'var(--cyan)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>
+        <div
+          style={{
+            fontSize: 11,
+            color: 'var(--cyan)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.14em',
+            fontWeight: 700,
+            marginBottom: 8,
+          }}
+        >
           {t('academy.lesson')} {lessonIdx + 1} · {mod.title}
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 8 }}>
+        <h1
+          style={{
+            fontSize: 28,
+            fontWeight: 800,
+            letterSpacing: '-0.02em',
+            marginBottom: 8,
+          }}
+        >
           {lesson.t}
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 28 }}>
@@ -81,10 +120,19 @@ export default function LessonPage() {
           dangerouslySetInnerHTML={{ __html: lesson.body }}
         />
 
-        {/* Quiz */}
-        {mod.quiz && lessonIdx === mod.items.length - 1 && (
+        {/* Module-level quiz (shown on last lesson of non-exam modules) */}
+        {mod.quiz && isLastLesson && (
           <div style={{ marginTop: 32, paddingTop: 28, borderTop: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 11, color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 16 }}>
+            <div
+              style={{
+                fontSize: 11,
+                color: 'var(--gold)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.14em',
+                fontWeight: 700,
+                marginBottom: 16,
+              }}
+            >
               {t('academy.knowledge')}
             </div>
             <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 14 }}>{mod.quiz.q}</div>
@@ -138,7 +186,10 @@ export default function LessonPage() {
                   borderRadius: 'var(--radius-sm)',
                   fontSize: 13,
                   fontWeight: 600,
-                  background: quizAnswer === mod.quiz.correct ? 'rgba(0,230,118,0.08)' : 'rgba(255,59,92,0.08)',
+                  background:
+                    quizAnswer === mod.quiz.correct
+                      ? 'rgba(0,230,118,0.08)'
+                      : 'rgba(255,59,92,0.08)',
                   border: `1px solid ${quizAnswer === mod.quiz.correct ? 'var(--green)' : 'var(--red)'}`,
                   color: quizAnswer === mod.quiz.correct ? 'var(--green)' : 'var(--red)',
                 }}
@@ -147,6 +198,51 @@ export default function LessonPage() {
                 {mod.quiz.explain}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Operator Exam launch — Module 5 only */}
+        {mod.isExam && isLastLesson && (
+          <div
+            style={{
+              marginTop: 32,
+              paddingTop: 28,
+              borderTop: '1px solid var(--border)',
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                color: 'var(--gold)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.14em',
+                fontWeight: 700,
+                marginBottom: 12,
+              }}
+            >
+              Operator Certification
+            </div>
+            <div style={{ fontSize: 14, color: 'var(--text-secondary)', marginBottom: 18 }}>
+              When you&apos;re ready, begin the exam. The 30-minute timer starts on click.
+            </div>
+            <button
+              onClick={() => setExamMode(true)}
+              style={{
+                background: 'var(--gold)',
+                color: '#1a1200',
+                padding: '12px 22px',
+                fontSize: 13,
+                fontWeight: 800,
+                borderRadius: 'var(--radius-sm)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                border: 'none',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+              }}
+            >
+              BEGIN OPERATOR EXAM →
+            </button>
           </div>
         )}
 
@@ -163,7 +259,16 @@ export default function LessonPage() {
           {hasPrev ? (
             <Link
               href={`/academy/${modIdx}/${lessonIdx - 1}`}
-              style={{ padding: '10px 20px', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', borderRadius: 'var(--radius-sm)', color: 'var(--text-secondary)', textDecoration: 'none' }}
+              style={{
+                padding: '10px 20px',
+                fontSize: 12,
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                borderRadius: 'var(--radius-sm)',
+                color: 'var(--text-secondary)',
+                textDecoration: 'none',
+              }}
             >
               {t('academy.prev')}
             </Link>
@@ -183,6 +288,7 @@ export default function LessonPage() {
               color: '#000',
               cursor: 'pointer',
               border: 'none',
+              fontFamily: 'inherit',
             }}
           >
             {hasNext ? t('academy.next') : t('academy.finish')}

@@ -150,6 +150,7 @@ export const MODULES: Module[] = [
     duration: '30 min',
     lessons: 1,
     tier: 'final',
+    isExam: true,
     items: [
       {
         t: 'The Operator Exam',

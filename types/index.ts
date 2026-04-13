@@ -48,6 +48,7 @@ export interface Module {
   duration: string;
   lessons: number;
   tier: 'core' | 'advanced' | 'final';
+  isExam?: boolean;
   items: Lesson[];
   quiz: Quiz | null;
 }
