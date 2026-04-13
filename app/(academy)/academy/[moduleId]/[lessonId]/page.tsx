@@ -3,9 +3,10 @@
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MODULES } from '@/lib/data/modules';
 import { useProgressStore } from '@/lib/state/use-progress-store';
+import { nextUnlockedLesson } from '@/lib/progress/selectors';
 import { ExamView } from '@/components/academy/exam-view';
 
 export default function LessonPage() {
@@ -13,6 +14,8 @@ export default function LessonPage() {
   const router = useRouter();
   const { moduleId, lessonId } = useParams<{ moduleId: string; lessonId: string }>();
   const markComplete = useProgressStore((s) => s.markComplete);
+  const checkLessonUnlocked = useProgressStore((s) => s.isLessonUnlocked);
+  const completed = useProgressStore((s) => s.completed);
 
   const modIdx = parseInt(moduleId);
   const lessonIdx = parseInt(lessonId);
@@ -20,8 +23,19 @@ export default function LessonPage() {
   const [quizAnswer, setQuizAnswer] = useState<number | null>(null);
   const [examMode, setExamMode] = useState(false);
 
-  if (!mod || lessonIdx < 0 || lessonIdx >= mod.items.length) {
-    router.push('/academy');
+  const lessonUnlocked = mod
+    ? checkLessonUnlocked(modIdx, lessonIdx)
+    : false;
+
+  // Gate: redirect immediately if lesson is locked or params are invalid
+  useEffect(() => {
+    if (!mod || lessonIdx < 0 || lessonIdx >= (mod?.items.length ?? 0) || !lessonUnlocked) {
+      router.replace(nextUnlockedLesson(completed));
+    }
+  }, [mod, lessonIdx, lessonUnlocked, router, completed]);
+
+  // While redirect is in flight or params are bad, render nothing
+  if (!mod || lessonIdx < 0 || lessonIdx >= mod.items.length || !lessonUnlocked) {
     return null;
   }
 

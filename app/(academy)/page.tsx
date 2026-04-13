@@ -8,10 +8,12 @@ import { ModCard } from '@/components/academy/mod-card';
 import { MODULES } from '@/lib/data/modules';
 import { useProgressStore } from '@/lib/state/use-progress-store';
 
+
 export default function DashboardPage() {
   const t = useTranslations();
   const session = useWalletStore((s) => s.session);
   const getModuleProgress = useProgressStore((s) => s.getModuleProgress);
+  const checkModuleUnlocked = useProgressStore((s) => s.isModuleUnlocked);
 
   const totalLessons = MODULES.reduce((sum, m) => sum + m.items.length, 0);
   const completedLessons = MODULES.reduce(
@@ -217,13 +219,17 @@ export default function DashboardPage() {
           gap: 18,
         }}
       >
-        {MODULES.slice(0, 4).map((mod) => (
-          <ModCard
-            key={mod.id}
-            module={mod}
-            progress={getModuleProgress(mod.id, mod.items.length)}
-          />
-        ))}
+        {MODULES.slice(0, 4).map((mod) => {
+          const locked = !checkModuleUnlocked(mod.id);
+          return (
+            <ModCard
+              key={mod.id}
+              module={mod}
+              progress={locked ? 0 : getModuleProgress(mod.id, mod.items.length)}
+              locked={locked}
+            />
+          );
+        })}
       </div>
     </div>
   );
