@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "홈",
+    "academy": "아카데미",
+    "vault": "볼트",
+    "leaderboard": "리더보드",
+    "terminal": "터미널 ↗",
+    "nxp": "NXP",
+    "rank": "랭크",
+    "connect": "지갑 연결"
+  },
+  "bridge": {
+    "live": "브릿지 활성화.",
+    "liveDesc": "지갑이 트레이딩 터미널과 동기화됨 — novex.finance로 바로 이동하세요.",
+    "once": "한 번만 연결.",
+    "onceDesc": "지갑 하나로 아카데미와 터미널 모두 잠금 해제 — 재인증 불필요.",
+    "cta": "터미널 열기 ↗"
+  },
+  "dash": {
+    "welcome": "다시 오셨군요",
+    "heroTitle1": "트레이더의 플레이북,",
+    "heroTitle2": "레짐 인식, 플릿 검증.",
+    "heroSub": "Novex 아카데미는 실제 트레이딩 플릿을 구동하는 정확한 시스템을 가르칩니다. SENSEI의 12가지 신호 차원을 마스터하고 Operator 랭크에 올라서세요.",
+    "continue": "계속 학습 →",
+    "openTerminal": "터미널 열기",
+    "progress": "진행 상황",
+    "ofComplete": "강의 완료",
+    "viewVault": "볼트 보기 →",
+    "curriculumEyebrow": "커리큘럼",
+    "curriculumTitle": "Operator 랭크까지 5개 모듈",
+    "viewAll": "전체 보기 →"
+  },
+  "academy": {
+    "eyebrow": "Novex 커리큘럼",
+    "title": "아카데미",
+    "sub": "5개 모듈 · 19개 강의. 실전 트레이딩 시스템 기반.",
+    "back": "← 아카데미로",
+    "backTo": "← 뒤로",
+    "lessons": "강의",
+    "done": "✓ 완료",
+    "start": "시작 →",
+    "module": "모듈",
+    "lesson": "강의",
+    "knowledge": "지식 확인",
+    "correct": "✓ 정답. ",
+    "wrong": "✗ 틀렸습니다. ",
+    "prev": "← 이전",
+    "next": "다음 강의 →",
+    "finish": "모듈 완료"
+  },
+  "vault": {
+    "eyebrow": "내 볼트",
+    "title": "개인 지휘 센터",
+    "sub": "통계, PnL, NXP, 정체성 — 한 곳에.",
+    "premium": "프리미엄 트레이더",
+    "rank": "랭크",
+    "novexXp": "Novex XP",
+    "toLegendary": "레전더리 랭크까지 XP",
+    "editProfile": "✎ 프로필 편집",
+    "totalPnl": "총 PnL",
+    "winRate": "승률",
+    "avgR": "평균 R",
+    "bestStreak": "최고 연승",
+    "totalTrades": "총 트레이드",
+    "sharpe": "샤프",
+    "maxDd": "최대 DD",
+    "graduation": "졸업",
+    "equityCurve": "에쿼티 커브",
+    "cumulative": "30일 누적 · 142 트레이드 ·",
+    "recentTrades": "최근 트레이드",
+    "fullJournal": "전체 저널 ↗",
+    "achievements": "업적",
+    "locked": "잠김",
+    "edit": {
+      "title": "프로필 편집",
+      "sub": "리더보드, 터미널, 볼트에 표시됩니다.",
+      "avatar": "아바타",
+      "name": "표시 이름",
+      "nameHint": "최대 20자. 리더보드에 표시.",
+      "initials": "이니셜",
+      "handle": "핸들",
+      "bio": "소개",
+      "bioPh": "트레이딩 스타일 한 줄",
+      "twitter": "Twitter / X",
+      "discord": "Discord",
+      "cancel": "취소",
+      "save": "저장"
+    }
+  },
+  "lb": {
+    "eyebrow": "탑 오퍼레이터",
+    "title": "리더보드",
+    "sub": "Novex 플릿 실시간 랭킹. 5분마다 업데이트.",
+    "pnl": "PnL",
+    "nxp": "NXP",
+    "wr": "승률",
+    "you": "나",
+    "rank": "랭크",
+    "operator": "오퍼레이터"
+  },
+  "wallet": {
+    "title": "지갑 연결",
+    "sub": "한 번 연결로 아카데미와 터미널 모두 사용."
+  },
+  "lang": {
+    "label": "언어"
+  }
+}

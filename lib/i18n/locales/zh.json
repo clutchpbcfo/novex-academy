@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "主页",
+    "academy": "学院",
+    "vault": "金库",
+    "leaderboard": "排行榜",
+    "terminal": "终端 ↗",
+    "nxp": "NXP",
+    "rank": "排名",
+    "connect": "连接钱包"
+  },
+  "bridge": {
+    "live": "桥接已激活。",
+    "liveDesc": "您的钱包已与交易终端同步 — 直接跳转到 novex.finance 一切都会保留。",
+    "once": "一次连接。",
+    "onceDesc": "一个钱包同时解锁学院和终端 — 无需重新认证。",
+    "cta": "打开终端 ↗"
+  },
+  "dash": {
+    "welcome": "欢迎回来",
+    "heroTitle1": "交易员的操盘手册，",
+    "heroTitle2": "感知市场形态，已由舰队验证。",
+    "heroSub": "Novex 学院传授驱动我们实盘交易舰队的精确系统。掌握 SENSEI 的 12 个信号维度，理解舰队共识，晋升 Operator 等级。",
+    "continue": "继续学习 →",
+    "openTerminal": "打开终端",
+    "progress": "学习进度",
+    "ofComplete": "课程已完成",
+    "viewVault": "查看金库 →",
+    "curriculumEyebrow": "课程体系",
+    "curriculumTitle": "5个模块达到 Operator 等级",
+    "viewAll": "查看全部 →"
+  },
+  "academy": {
+    "eyebrow": "Novex 课程体系",
+    "title": "学院",
+    "sub": "5个模块 · 19节课。围绕实盘交易系统构建。",
+    "back": "← 返回学院",
+    "backTo": "← 返回",
+    "lessons": "节课",
+    "done": "✓ 完成",
+    "start": "开始 →",
+    "module": "模块",
+    "lesson": "课程",
+    "knowledge": "知识检测",
+    "correct": "✓ 正确。 ",
+    "wrong": "✗ 不对。 ",
+    "prev": "← 上一节",
+    "next": "下一节课 →",
+    "finish": "完成模块"
+  },
+  "vault": {
+    "eyebrow": "您的金库",
+    "title": "个人指挥中心",
+    "sub": "您的统计数据、PnL、NXP 和身份 — 尽在一处。",
+    "premium": "高级交易员",
+    "rank": "排名",
+    "novexXp": "Novex XP",
+    "toLegendary": "升至传奇等级所需 XP",
+    "editProfile": "✎ 编辑资料",
+    "totalPnl": "总 PnL",
+    "winRate": "胜率",
+    "avgR": "平均 R",
+    "bestStreak": "最佳连胜",
+    "totalTrades": "总交易次数",
+    "sharpe": "夏普比率",
+    "maxDd": "最大回撤",
+    "graduation": "毕业进度",
+    "equityCurve": "权益曲线",
+    "cumulative": "30天累计 · 142笔交易 ·",
+    "recentTrades": "最近交易",
+    "fullJournal": "完整日志 ↗",
+    "achievements": "成就",
+    "locked": "未解锁",
+    "edit": {
+      "title": "编辑资料",
+      "sub": "显示在排行榜、终端和金库中。",
+      "avatar": "头像",
+      "name": "显示名称",
+      "nameHint": "最多20字符，显示在排行榜上。",
+      "initials": "缩写",
+      "handle": "用户名",
+      "bio": "简介",
+      "bioPh": "一句话描述您的交易风格",
+      "twitter": "Twitter / X",
+      "discord": "Discord",
+      "cancel": "取消",
+      "save": "保存"
+    }
+  },
+  "lb": {
+    "eyebrow": "顶级操作员",
+    "title": "排行榜",
+    "sub": "来自 Novex 舰队的实时排名。每5分钟更新。",
+    "pnl": "PnL",
+    "nxp": "NXP",
+    "wr": "胜率",
+    "you": "我",
+    "rank": "排名",
+    "operator": "操作员"
+  },
+  "wallet": {
+    "title": "连接钱包",
+    "sub": "一次连接，学院和终端都可使用。"
+  },
+  "lang": {
+    "label": "语言"
+  }
+}

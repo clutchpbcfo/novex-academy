@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "academy": "Academy",
+    "vault": "Vault",
+    "leaderboard": "Leaderboard",
+    "terminal": "Terminal ↗",
+    "nxp": "NXP",
+    "rank": "Rank",
+    "connect": "Connect Wallet"
+  },
+  "bridge": {
+    "live": "Bridge live.",
+    "liveDesc": "Your wallet is synced with the trading terminal — jump to novex.finance and everything carries over.",
+    "once": "Connect once.",
+    "onceDesc": "Your wallet unlocks both the academy and the full trading terminal — no re-authentication.",
+    "cta": "Open Terminal ↗"
+  },
+  "dash": {
+    "welcome": "Welcome back",
+    "heroTitle1": "The trader's playbook,",
+    "heroTitle2": "regime-aware and fleet-verified.",
+    "heroSub": "Novex Academy teaches the exact system that powers our live trading fleet. Master SENSEI's 12 signal dimensions, understand fleet consensus, and graduate into Operator rank.",
+    "continue": "Continue Learning →",
+    "openTerminal": "Open Terminal",
+    "progress": "Your Progress",
+    "ofComplete": "lessons complete",
+    "viewVault": "View Vault →",
+    "curriculumEyebrow": "The Curriculum",
+    "curriculumTitle": "5 modules to Operator rank",
+    "viewAll": "View all →"
+  },
+  "academy": {
+    "eyebrow": "The Novex Curriculum",
+    "title": "Academy",
+    "sub": "5 modules. 19 lessons. Built around the live trading system.",
+    "back": "← Back to Academy",
+    "backTo": "← Back to",
+    "lessons": "lessons",
+    "done": "✓ DONE",
+    "start": "START →",
+    "module": "MODULE",
+    "lesson": "Lesson",
+    "knowledge": "Knowledge check",
+    "correct": "✓ Correct. ",
+    "wrong": "✗ Not quite. ",
+    "prev": "← Previous",
+    "next": "Next lesson →",
+    "finish": "Finish module"
+  },
+  "vault": {
+    "eyebrow": "Your Vault",
+    "title": "Personal Command Center",
+    "sub": "Your stats, your PnL, your NXP, your identity — all in one place.",
+    "premium": "Premium Trader",
+    "rank": "Rank",
+    "novexXp": "Novex XP",
+    "toLegendary": "XP to Legendary rank",
+    "editProfile": "✎ Edit Profile",
+    "totalPnl": "Total PnL",
+    "winRate": "Win Rate",
+    "avgR": "Avg R",
+    "bestStreak": "Best Streak",
+    "totalTrades": "Total Trades",
+    "sharpe": "Sharpe",
+    "maxDd": "Max DD",
+    "graduation": "Graduation",
+    "equityCurve": "Equity Curve",
+    "cumulative": "30-day cumulative · 142 trades ·",
+    "recentTrades": "Recent Trades",
+    "fullJournal": "Full journal ↗",
+    "achievements": "Achievements",
+    "locked": "locked",
+    "edit": {
+      "title": "Edit your profile",
+      "sub": "Shows up in leaderboards, terminal, and your vault.",
+      "avatar": "Avatar",
+      "name": "Display name",
+      "nameHint": "Max 20 chars. Shown on the leaderboard.",
+      "initials": "Initials",
+      "handle": "Handle",
+      "bio": "Bio",
+      "bioPh": "One line about how you trade",
+      "twitter": "Twitter / X",
+      "discord": "Discord",
+      "cancel": "Cancel",
+      "save": "Save Profile"
+    }
+  },
+  "lb": {
+    "eyebrow": "Top Operators",
+    "title": "Leaderboard",
+    "sub": "Live rankings from the Novex fleet. Updated every 5 minutes.",
+    "pnl": "PnL",
+    "nxp": "NXP",
+    "wr": "Win Rate",
+    "you": "YOU",
+    "rank": "Rank",
+    "operator": "Operator"
+  },
+  "wallet": {
+    "title": "Connect a wallet",
+    "sub": "One connection. Works across Academy and Terminal."
+  },
+  "lang": {
+    "label": "Language"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "academy": "アカデミー",
+    "vault": "ヴォルト",
+    "leaderboard": "ランキング",
+    "terminal": "ターミナル ↗",
+    "nxp": "NXP",
+    "rank": "ランク",
+    "connect": "ウォレット接続"
+  },
+  "bridge": {
+    "live": "ブリッジ稼働中。",
+    "liveDesc": "ウォレットは取引ターミナルと同期済み。novex.finance へそのまま移動できます。",
+    "once": "一度接続するだけ。",
+    "onceDesc": "ウォレット接続でアカデミーとターミナルの両方が解錠されます。",
+    "cta": "ターミナルを開く ↗"
+  },
+  "dash": {
+    "welcome": "おかえりなさい",
+    "heroTitle1": "トレーダーの実戦書、",
+    "heroTitle2": "レジーム対応・フリート検証済み。",
+    "heroSub": "Novex アカデミーでは実際のトレーディングフリートを動かす仕組みを学びます。SENSEI の 12 次元シグナル、フリート合意、そしてオペレーター昇格までを体系化。",
+    "continue": "学習を続ける →",
+    "openTerminal": "ターミナルを開く",
+    "progress": "進捗",
+    "ofComplete": "レッスン完了",
+    "viewVault": "ヴォルトを見る →",
+    "curriculumEyebrow": "カリキュラム",
+    "curriculumTitle": "オペレーターへの5モジュール",
+    "viewAll": "すべて表示 →"
+  },
+  "academy": {
+    "eyebrow": "Novex カリキュラム",
+    "title": "アカデミー",
+    "sub": "5モジュール・19レッスン。実運用トレードシステムに基づく。",
+    "back": "← アカデミーへ戻る",
+    "backTo": "← 戻る",
+    "lessons": "レッスン",
+    "done": "✓ 完了",
+    "start": "開始 →",
+    "module": "モジュール",
+    "lesson": "レッスン",
+    "knowledge": "理解度チェック",
+    "correct": "✓ 正解。 ",
+    "wrong": "✗ 不正解。 ",
+    "prev": "← 前へ",
+    "next": "次のレッスン →",
+    "finish": "モジュール修了"
+  },
+  "vault": {
+    "eyebrow": "ヴォルト",
+    "title": "パーソナル指揮センター",
+    "sub": "統計・PnL・NXP・アイデンティティ、すべてここに。",
+    "premium": "プレミアムトレーダー",
+    "rank": "ランク",
+    "novexXp": "Novex XP",
+    "toLegendary": "XP でレジェンド到達",
+    "editProfile": "✎ プロフィール編集",
+    "totalPnl": "累計 PnL",
+    "winRate": "勝率",
+    "avgR": "平均 R",
+    "bestStreak": "最高連勝",
+    "totalTrades": "総トレード数",
+    "sharpe": "シャープ",
+    "maxDd": "最大 DD",
+    "graduation": "卒業進捗",
+    "equityCurve": "エクイティカーブ",
+    "cumulative": "30日累計 · 142トレード ·",
+    "recentTrades": "最近のトレード",
+    "fullJournal": "全履歴 ↗",
+    "achievements": "実績",
+    "locked": "未獲得",
+    "edit": {
+      "title": "プロフィール編集",
+      "sub": "ランキング、ターミナル、ヴォルトに表示されます。",
+      "avatar": "アバター",
+      "name": "表示名",
+      "nameHint": "最大20文字。ランキングに表示。",
+      "initials": "イニシャル",
+      "handle": "ハンドル",
+      "bio": "自己紹介",
+      "bioPh": "あなたの取引スタイル",
+      "twitter": "Twitter / X",
+      "discord": "Discord",
+      "cancel": "キャンセル",
+      "save": "保存"
+    }
+  },
+  "lb": {
+    "eyebrow": "トップオペレーター",
+    "title": "ランキング",
+    "sub": "Novex フリートからのリアルタイム順位。5分毎更新。",
+    "pnl": "PnL",
+    "nxp": "NXP",
+    "wr": "勝率",
+    "you": "YOU",
+    "rank": "順位",
+    "operator": "オペレーター"
+  },
+  "wallet": {
+    "title": "ウォレット接続",
+    "sub": "一度の接続でアカデミーとターミナルの両方で使えます。"
+  },
+  "lang": {
+    "label": "言語"
+  }
+}
