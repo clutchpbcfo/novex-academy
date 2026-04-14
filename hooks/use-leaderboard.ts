@@ -13,9 +13,10 @@ export function useLeaderboard({ range = '30D', metric = 'pnl', page = 1 }: Lead
   return useQuery<LeaderboardEntry[]>({
     queryKey: ['leaderboard', range, metric, page],
     queryFn: () =>
-      fetch(`/api/leaderboard?range=${range}&metric=${metric}&page=${page}`).then((r) =>
-        r.json(),
-      ),
+      fetch(`/api/leaderboard?range=${range}&metric=${metric}&page=${page}`).then((r) => {
+        if (!r.ok) throw new Error('Leaderboard unavailable');
+        return r.json();
+      }),
     staleTime: 5 * 60 * 1000, // 5 min
   });
 }

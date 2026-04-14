@@ -31,6 +31,7 @@ vi.mock('@/lib/state/use-profile-store', () => ({
       bio: 'Test bio',
       avatarBg: 'cyan-purple',
       avatarInitials: 'CL',
+      avatarEmoji: '⚡',
     },
     setProfile: vi.fn(),
   }),
@@ -38,7 +39,7 @@ vi.mock('@/lib/state/use-profile-store', () => ({
 
 global.fetch = vi.fn().mockResolvedValue({
   ok: true,
-  json: () => Promise.resolve({ displayName: 'Clutch', handle: 'clutch.novex', bio: 'Test bio', avatarBg: 'cyan-purple', avatarInitials: 'CL' }),
+  json: () => Promise.resolve({ displayName: 'Clutch', handle: 'clutch.novex', bio: 'Test bio', avatarBg: 'cyan-purple', avatarInitials: 'CL', avatarEmoji: '⚡' }),
 });
 
 describe('ProfileEditorModal', () => {

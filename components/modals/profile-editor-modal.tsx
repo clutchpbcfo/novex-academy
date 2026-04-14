@@ -5,14 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useProfileStore } from '@/lib/state/use-profile-store';
 import type { Profile } from '@/types';
 
-const AVATAR_BG_OPTIONS: Array<{ id: Profile['avatarBg']; style: React.CSSProperties }> = [
-  { id: 'cyan-purple', style: { background: 'linear-gradient(135deg, var(--cyan), var(--purple))' } },
-  { id: 'gold-orange', style: { background: 'linear-gradient(135deg, var(--gold), var(--orange))' } },
-  { id: 'green-cyan', style: { background: 'linear-gradient(135deg, var(--green), var(--cyan))' } },
-  { id: 'red-purple', style: { background: 'linear-gradient(135deg, var(--red), var(--purple))' } },
-  { id: 'pink-orange', style: { background: 'linear-gradient(135deg, #e91e63, var(--orange))' } },
-  { id: 'blue-cyan', style: { background: 'linear-gradient(135deg, #3b99fc, var(--cyan))' } },
-];
+const EMOJI_AVATARS = ['⚡', '🔥', '🚀', '💎', '🐋', '🏰', '⚔️', '👑', '🛸', '🎯', '🧠', '🐼', '💀', '🌊', '🦅', '🎮'];
 
 interface ProfileEditorModalProps {
   open: boolean;
@@ -66,6 +59,8 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
     marginBottom: 6,
   };
 
+  const selectedEmoji = form.avatarEmoji ?? '⚡';
+
   return (
     <div
       onClick={onClose}
@@ -115,32 +110,30 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
             {t('vault.edit.sub')}
           </p>
 
-          {/* Avatar picker */}
-          <div style={{ marginBottom: 16 }}>
+          {/* Emoji avatar picker */}
+          <div style={{ marginBottom: 20 }}>
             <label style={labelStyle}>{t('vault.edit.avatar')}</label>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {AVATAR_BG_OPTIONS.map((opt) => (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8 }}>
+              {EMOJI_AVATARS.map((em) => (
                 <button
-                  key={opt.id}
-                  onClick={() => setForm((f) => ({ ...f, avatarBg: opt.id }))}
+                  key={em}
+                  onClick={() => setForm((f) => ({ ...f, avatarEmoji: em }))}
                   style={{
-                    width: 48,
-                    height: 48,
+                    width: 44,
+                    height: 44,
                     borderRadius: '50%',
+                    background: selectedEmoji === em ? 'rgba(0,229,255,0.12)' : 'var(--bg-elev)',
+                    border: selectedEmoji === em ? '2px solid var(--cyan)' : '2px solid var(--border)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontWeight: 800,
-                    color: '#000',
-                    fontSize: 18,
+                    fontSize: 22,
                     cursor: 'pointer',
-                    border: form.avatarBg === opt.id ? '2px solid var(--cyan)' : '2px solid transparent',
-                    boxShadow: form.avatarBg === opt.id ? '0 0 12px var(--cyan-soft)' : 'none',
+                    boxShadow: selectedEmoji === em ? '0 0 12px rgba(0,229,255,0.3)' : 'none',
                     transition: 'all 0.15s',
-                    ...opt.style,
                   }}
                 >
-                  {form.avatarInitials || 'A'}
+                  {em}
                 </button>
               ))}
             </div>
@@ -158,19 +151,6 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
               onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = ''; }}
             />
             <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>{t('vault.edit.nameHint')}</div>
-          </div>
-
-          {/* Initials */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={labelStyle}>{t('vault.edit.initials')}</label>
-            <input
-              style={{ ...inputStyle, width: 80 }}
-              value={form.avatarInitials}
-              maxLength={2}
-              onChange={(e) => setForm((f) => ({ ...f, avatarInitials: e.target.value.toUpperCase() }))}
-              onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
-            />
           </div>
 
           {/* Handle */}

@@ -52,17 +52,18 @@ export function LeaderboardRow({ entry, metric }: LeaderboardRowProps) {
             width: 36,
             height: 36,
             borderRadius: '50%',
-            background: entry.avatarBg,
+            background: entry.avatarEmoji ? 'var(--bg-elev)' : entry.avatarBg,
+            border: entry.avatarEmoji ? '1px solid var(--border)' : undefined,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 800,
-            color: '#000',
-            fontSize: 13,
+            color: entry.avatarEmoji ? undefined : '#000',
+            fontSize: entry.avatarEmoji ? 18 : 13,
             flexShrink: 0,
           }}
         >
-          {entry.avatarInitials}
+          {entry.avatarEmoji ?? entry.avatarInitials}
         </div>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontWeight: 700, fontSize: 13 }}>{entry.name}</div>

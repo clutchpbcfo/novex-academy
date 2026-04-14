@@ -35,8 +35,24 @@ export interface Profile {
     | 'pink-orange'
     | 'blue-cyan';
   avatarInitials: string;
+  avatarEmoji?: string;
   twitter?: string;
   tradingView?: string;
+}
+
+/** Shape of each record in the Vercel Blob traders.json */
+export interface BlobTrader {
+  wallet: string;
+  username: string;
+  nxp: number;
+  tier: string;
+  volume: number;
+  pnl: number;
+  wr: number;
+  activeDays: number;
+  badges: string[];
+  rank: number;
+  trades?: number;
 }
 
 export interface Module {
@@ -71,6 +87,8 @@ export interface LeaderboardEntry {
   handle: string;
   avatarBg: string;
   avatarInitials: string;
+  avatarEmoji?: string;
+  wallet?: string;
   pnl: number;
   nxp: number;
   wr: number;

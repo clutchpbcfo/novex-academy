@@ -2,13 +2,12 @@ import { create } from 'zustand';
 import type { Profile } from '@/types';
 
 const DEFAULT_PROFILE: Profile = {
-  displayName: 'Clutch',
-  handle: 'clutch.novex',
-  bio: 'Regime-aware perp trader. Only choppy, only premium. SENSEI v7.7 on 5m.',
+  displayName: '',
+  handle: '',
+  bio: '',
   avatarBg: 'cyan-purple',
-  avatarInitials: 'CL',
-  twitter: '@clutch_novex',
-  tradingView: '',
+  avatarInitials: '',
+  avatarEmoji: '⚡',
 };
 
 interface ProfileStore {

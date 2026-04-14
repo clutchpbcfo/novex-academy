@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useWalletStore } from '@/lib/state/use-wallet-store';
+import { useProfileStore } from '@/lib/state/use-profile-store';
+import { useTrader } from '@/hooks/use-trader';
 import { shortAddr } from '@/lib/utils';
 import { LanguagePicker } from '@/components/modals/language-picker';
-import { useState } from 'react';
 
 interface NavBarProps {
   onConnect: () => void;
@@ -24,6 +25,12 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
   const t = useTranslations();
   const pathname = usePathname();
   const session = useWalletStore((s) => s.session);
+  const { profile } = useProfileStore();
+  const { data: trader } = useTrader(session?.address);
+
+  const nxp = trader?.nxp ?? null;
+  const rank = trader?.rank ?? null;
+  const emoji = profile.avatarEmoji ?? '⚡';
 
   return (
     <nav
@@ -63,20 +70,6 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
           </div>
           <span style={{ color: 'var(--text-primary)', fontSize: 15, fontWeight: 800, letterSpacing: '0.04em' }}>
             NOVEX
-          </span>
-          <span
-            style={{
-              color: 'var(--cyan)',
-              fontSize: 11,
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.14em',
-              padding: '2px 8px',
-              border: '1px solid var(--cyan-soft)',
-              borderRadius: 4,
-            }}
-          >
-            Academy
           </span>
         </Link>
         <div style={{ display: 'flex', gap: 2 }}>
@@ -124,23 +117,27 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
 
       {/* Right */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        {session && (
+        {session && nxp !== null && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
               <span style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 600 }}>
                 {t('nav.nxp')}
               </span>
               <span style={{ fontSize: 13, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, color: 'var(--gold)' }}>
-                11,340
+                {nxp.toLocaleString()}
               </span>
             </div>
             <div style={{ width: 1, height: 26, background: 'var(--border)' }} />
+          </>
+        )}
+        {session && rank !== null && (
+          <>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
               <span style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 600 }}>
                 {t('nav.rank')}
               </span>
               <span style={{ fontSize: 13, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, color: 'var(--purple)' }}>
-                #6
+                #{rank}
               </span>
             </div>
             <div style={{ width: 1, height: 26, background: 'var(--border)' }} />
@@ -180,6 +177,7 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
                 display: 'block',
               }}
             />
+            <span style={{ fontSize: 18 }}>{emoji}</span>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--green)', fontWeight: 700 }}>
               {shortAddr(session.address)}
             </span>

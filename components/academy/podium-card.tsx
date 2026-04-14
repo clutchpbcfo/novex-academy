@@ -93,18 +93,19 @@ export function PodiumCard({ entry, metric }: PodiumCardProps) {
           width: cfg.avatarSize,
           height: cfg.avatarSize,
           borderRadius: '50%',
-          background: cfg.avatarBg,
+          background: entry.avatarEmoji ? 'var(--bg-elev)' : cfg.avatarBg,
+          border: entry.avatarEmoji ? `2px solid ${cfg.borderColor}` : undefined,
           margin: '0 auto 12px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontWeight: 800,
-          fontSize: cfg.fontSize,
+          fontWeight: entry.avatarEmoji ? undefined : 800,
+          fontSize: entry.avatarEmoji ? Math.round(cfg.avatarSize * 0.5) : cfg.fontSize,
           color: rank === 3 ? '#fff' : '#000',
           boxShadow: rank === 1 ? '0 0 24px var(--gold-soft)' : undefined,
         }}
       >
-        {entry.avatarInitials}
+        {entry.avatarEmoji ?? entry.avatarInitials}
       </div>
       <div style={{ fontSize: 14, fontWeight: 800, marginBottom: 4 }}>{entry.name}</div>
       <div

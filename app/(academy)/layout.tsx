@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Ticker } from '@/components/academy/ticker';
 import { NavBar } from '@/components/academy/navbar';
 import { WalletModal } from '@/components/modals/wallet-modal';
@@ -10,8 +9,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { broadcastSession } from '@/lib/wallet/bridge';
 
 export default function AcademyLayout({ children }: { children: React.ReactNode }) {
-  const [walletOpen, setWalletOpen] = useState(false);
   const setSession = useWalletStore((s) => s.setSession);
+  const walletModalOpen = useWalletStore((s) => s.walletModalOpen);
+  const setWalletModalOpen = useWalletStore((s) => s.setWalletModalOpen);
   const queryClient = useQueryClient();
 
   // Hydrate session on mount
@@ -28,7 +28,7 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Ticker />
       <NavBar
-        onConnect={() => setWalletOpen(true)}
+        onConnect={() => setWalletModalOpen(true)}
         onDisconnect={handleDisconnect}
       />
       <main style={{ flex: 1 }}>
@@ -44,7 +44,7 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
           letterSpacing: '0.06em',
         }}
       >
-        © 2024 Novex Finance.{' '}
+        © 2026 Novex Finance.{' '}
         <a href="https://novex.finance" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
           Terminal
         </a>
@@ -55,7 +55,7 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
           Vault
         </a>
       </footer>
-      <WalletModal open={walletOpen} onClose={() => setWalletOpen(false)} />
+      <WalletModal open={walletModalOpen} onClose={() => setWalletModalOpen(false)} />
     </div>
   );
 }

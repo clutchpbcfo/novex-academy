@@ -3,25 +3,48 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useWalletStore } from '@/lib/state/use-wallet-store';
+import { useProfileStore } from '@/lib/state/use-profile-store';
 import { BridgeBanner } from '@/components/academy/bridge-banner';
 import { PodiumCard } from '@/components/academy/podium-card';
 import { LeaderboardRow } from '@/components/academy/leaderboard-row';
 import { useLeaderboard } from '@/hooks/use-leaderboard';
+import type { LeaderboardEntry } from '@/types';
 
 type Range = '7D' | '30D' | '90D' | 'ALL';
 type Metric = 'pnl' | 'nxp' | 'wr';
 
+function fmtNxp(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+  return n.toLocaleString();
+}
+
 export default function LeaderboardPage() {
   const t = useTranslations();
   const session = useWalletStore((s) => s.session);
+  const { profile } = useProfileStore();
   const [range, setRange] = useState<Range>('30D');
   const [metric, setMetric] = useState<Metric>('pnl');
 
-  const { data: entries = [], isLoading } = useLeaderboard({ range, metric });
+  const { data: rawEntries = [], isLoading, isError } = useLeaderboard({ range, metric });
+
+  // Client-side: mark the connected user's row as isYou + inject emoji
+  const connectedWallet = session?.address?.toLowerCase();
+  const entries: LeaderboardEntry[] = rawEntries.map((e) => ({
+    ...e,
+    isYou: Boolean(connectedWallet && e.wallet?.toLowerCase() === connectedWallet),
+    avatarEmoji:
+      connectedWallet && e.wallet?.toLowerCase() === connectedWallet
+        ? (profile.avatarEmoji ?? undefined)
+        : undefined,
+  }));
 
   const top3 = entries.slice(0, 3);
   const rest = entries.slice(3);
   const youEntry = entries.find((e) => e.isYou);
+
+  // Summary computed from entries
+  const totalTraders = entries.length;
+  const totalNxp = entries.reduce((sum, e) => sum + e.nxp, 0);
 
   const RANGES: Range[] = ['7D', '30D', '90D', 'ALL'];
   const METRICS: { id: Metric; label: string }[] = [
@@ -58,6 +81,44 @@ export default function LeaderboardPage() {
         <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>{t('lb.sub')}</p>
       </div>
 
+      {/* Summary cards */}
+      {!isLoading && !isError && totalTraders > 0 && (
+        <div style={{ display: 'flex', gap: 14, marginBottom: 24 }}>
+          <div
+            style={{
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius)',
+              padding: '14px 20px',
+              flex: '0 0 auto',
+            }}
+          >
+            <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 4 }}>
+              TRADERS
+            </div>
+            <div style={{ fontSize: 22, fontWeight: 800, fontFamily: "'JetBrains Mono', monospace", color: 'var(--text-primary)' }}>
+              {totalTraders}
+            </div>
+          </div>
+          <div
+            style={{
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius)',
+              padding: '14px 20px',
+              flex: '0 0 auto',
+            }}
+          >
+            <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 4 }}>
+              TOTAL NXP
+            </div>
+            <div style={{ fontSize: 22, fontWeight: 800, fontFamily: "'JetBrains Mono', monospace", color: 'var(--gold)' }}>
+              {fmtNxp(totalNxp)}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Controls */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'inline-flex', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: 3, gap: 2 }}>
@@ -72,72 +133,93 @@ export default function LeaderboardPage() {
         </div>
       </div>
 
-      {/* Podium */}
-      {top3.length === 3 && (
+      {/* Error state */}
+      {isError && (
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gap: 16,
-            marginBottom: 24,
-            alignItems: 'end',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-lg)',
+            padding: 60,
+            textAlign: 'center',
+            color: 'var(--text-muted)',
+            fontSize: 14,
           }}
         >
-          {top3.map((entry) => (
-            <PodiumCard key={entry.rank} entry={entry} metric={metric} />
-          ))}
+          Leaderboard temporarily unavailable. Please try again shortly.
         </div>
       )}
 
-      {/* Table */}
-      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative' }}>
-        {/* Header */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '60px 1fr 110px 110px 110px 100px',
-            gap: 14,
-            padding: '14px 20px',
-            background: 'var(--bg-elev)',
-            borderBottom: '1px solid var(--border)',
-            fontSize: 10,
-            color: 'var(--text-muted)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.14em',
-            fontWeight: 700,
-          }}
-        >
-          <span>{t('lb.rank')}</span>
-          <span>{t('lb.operator')}</span>
-          <span style={{ textAlign: 'right' }}>{metric === 'pnl' ? t('lb.pnl') : metric === 'nxp' ? t('lb.nxp') : t('lb.wr')}</span>
-          <span style={{ textAlign: 'right' }}>{t('lb.nxp')}</span>
-          <span style={{ textAlign: 'right' }}>{t('lb.wr')}</span>
-          <span style={{ textAlign: 'right' }}>Trend</span>
-        </div>
+      {!isError && (
+        <>
+          {/* Podium */}
+          {top3.length === 3 && (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gap: 16,
+                marginBottom: 24,
+                alignItems: 'end',
+              }}
+            >
+              {top3.map((entry) => (
+                <PodiumCard key={entry.rank} entry={entry} metric={metric} />
+              ))}
+            </div>
+          )}
 
-        {isLoading ? (
-          <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>Loading…</div>
-        ) : (
-          rest.map((entry) => (
-            <LeaderboardRow key={entry.rank} entry={entry} metric={metric} />
-          ))
-        )}
+          {/* Table */}
+          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative' }}>
+            {/* Header */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '60px 1fr 110px 110px 110px 100px',
+                gap: 14,
+                padding: '14px 20px',
+                background: 'var(--bg-elev)',
+                borderBottom: '1px solid var(--border)',
+                fontSize: 10,
+                color: 'var(--text-muted)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.14em',
+                fontWeight: 700,
+              }}
+            >
+              <span>{t('lb.rank')}</span>
+              <span>{t('lb.operator')}</span>
+              <span style={{ textAlign: 'right' }}>{metric === 'pnl' ? t('lb.pnl') : metric === 'nxp' ? t('lb.nxp') : t('lb.wr')}</span>
+              <span style={{ textAlign: 'right' }}>{t('lb.nxp')}</span>
+              <span style={{ textAlign: 'right' }}>{t('lb.wr')}</span>
+              <span style={{ textAlign: 'right' }}>Trend</span>
+            </div>
 
-        {/* Sticky you row */}
-        {youEntry && youEntry.rank > 3 && (
-          <div
-            style={{
-              position: 'sticky',
-              bottom: 0,
-              background: 'var(--bg-elev)',
-              borderTop: '1px solid var(--cyan)',
-              boxShadow: '0 -12px 24px rgba(0,229,255,0.08)',
-            }}
-          >
-            <LeaderboardRow entry={youEntry} metric={metric} />
+            {isLoading ? (
+              <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>Loading…</div>
+            ) : (
+              rest.map((entry) => (
+                <LeaderboardRow key={entry.rank} entry={entry} metric={metric} />
+              ))
+            )}
+
+            {/* Sticky you row */}
+            {youEntry && youEntry.rank > 3 && (
+              <div
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  background: 'var(--bg-elev)',
+                  borderTop: '1px solid var(--cyan)',
+                  boxShadow: '0 -12px 24px rgba(0,229,255,0.08)',
+                }}
+              >
+                <LeaderboardRow entry={youEntry} metric={metric} />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 }
