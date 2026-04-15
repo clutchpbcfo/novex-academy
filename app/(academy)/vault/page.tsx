@@ -161,8 +161,8 @@ export default function VaultPage() {
   const isNewTrader = !trader;
 
   // ── Full render (State 3b: found) ─────────────────────────────────────────
-  const displayName = profile.displayName || shortAddr(session.address);
-  const handle = profile.handle || shortAddr(session.address);
+  const displayName = profile.displayName || shortAddr(session?.address ?? '');
+  const handle = profile.handle || shortAddr(session?.address ?? '');
   const nxp = trader?.nxp ?? 0;
   const rank = trader?.rank ?? null;
   const pnl = trader?.pnl ?? 0;
