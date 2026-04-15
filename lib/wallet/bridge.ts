@@ -168,8 +168,12 @@ export function broadcastDisconnect(): void {
 // --- Backward Compatibility ---
 // wallet-modal.tsx imports these names from the old bridge
 
-export function broadcastSession(session: WalletSession): void {
-  broadcastConnect(session);
+export function broadcastSession(session?: WalletSession | null): void {
+  if (session) {
+    broadcastConnect(session);
+  } else {
+    broadcastDisconnect();
+  }
 }
 
 export function subscribeToSessionChanges(
