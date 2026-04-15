@@ -345,12 +345,12 @@ export default function VaultPage() {
             <StatCard label={t('vault.totalPnl')} value={isNewTrader ? '—' : fmtUSD(pnl)} delta={isNewTrader ? undefined : `${pnl >= 0 ? '+' : ''}${((pnl / Math.max(volume, 1)) * 100).toFixed(1)}%`} up={pnl >= 0} />
             <StatCard label={t('vault.winRate')} value={isNewTrader ? '—' : `${wr}%`} />
             <StatCard label="Volume" value={isNewTrader ? '—' : fmtUSD(volume)} />
-            <StatCard label={t('vault.bestStreak')} value="—" />
+                        <StatCard label={t('vault.bestStreak')} value={isNewTrader ? '—' : `${trader?.bestStreak ?? 0}W`} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
             <StatCard label={t('vault.totalTrades')} value={isNewTrader ? '—' : trades2.toString()} />
-            <StatCard label={t('vault.sharpe')} value="—" />
-            <StatCard label={t('vault.maxDd')} value="—" />
+                        <StatCard label={t('vault.sharpe')} value={isNewTrader ? '—' : fmtUSD(trader?.bestTrade ?? 0)} />
+                        <StatCard label={t('vault.maxDd')} value={isNewTrader ? '—' : `${trader?.profitDays ?? 0}d`} />
             <StatCard label={t('vault.graduation')} value={`${gradPct}%`} delta={`${completedLessons}/${totalLessons}`} up={gradPct > 0} />
           </div>
 
@@ -364,7 +364,7 @@ export default function VaultPage() {
                   </span>
                 </div>
                 <div style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 8 }}>
-                  Coming soon — historical equity curve
+                                    Equity data syncs from your terminal trades
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 4 }}>
