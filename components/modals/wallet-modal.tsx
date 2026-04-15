@@ -6,19 +6,21 @@ import { broadcastSession } from '@/lib/wallet/bridge';
 import { useWalletStore } from '@/lib/state/use-wallet-store';
 import { useQueryClient } from '@tanstack/react-query';
 import type { WalletProvider } from '@/types';
+import { useState } from 'react';
 
-const WALLET_LOGO_STYLES: Record<WalletProvider, React.CSSProperties> = {
-  phantom: { background: '#ab9ff2', color: '#000' },
-  solflare: { background: 'linear-gradient(135deg, #fc7507, #ffbe3d)', color: '#000' },
-  backpack: { background: '#e33e3e', color: '#fff' },
-  metamask: { background: '#f6851b', color: '#fff' },
-  walletconnect: { background: '#3b99fc', color: '#fff' },
-  coinbase: { background: '#0052ff', color: '#fff' },
-  okx: { background: '#000', border: '1px solid #333', color: '#fff' },
-  rabby: { background: '#7084ff', color: '#fff' },
-  binance: { background: 'linear-gradient(135deg, #f3ba2f, #f0b90b)', color: '#000' },
-  trust: { background: '#3375bb', color: '#fff' },
-  ledger: { background: '#000', border: '1px solid #333', color: '#fff' },
+/* ── wallet logo background styles ─────────────────────────────── */
+const WALLET_LOGO_STYLES: Record<string, string> = {
+  phantom:       'bg-[#AB9FF2]',
+  solflare:      'bg-[#FC8C17]',
+  backpack:      'bg-[#E33E3F]',
+  metamask:      'bg-[#F6851B]',
+  walletconnect: 'bg-[#3B99FC]',
+  coinbase:      'bg-[#0052FF]',
+  okx:           'bg-[#000000]',
+  rabby:         'bg-[#8697FF]',
+  binance:       'bg-[#F0B90B]',
+  trust:         'bg-[#0500FF]',
+  ledger:        'bg-[#000000]',
 };
 
 interface WalletModalProps {
@@ -26,174 +28,188 @@ interface WalletModalProps {
   onClose: () => void;
 }
 
+/* ── helpers: talk to real browser wallet extensions ────────────── */
+
+async function connectSolana(provider: WalletProvider): Promise<string> {
+  const walletMap: Record<string, () => unknown> = {
+    phantom:  () => (window as any).phantom?.solana,
+    solflare: () => (window as any).solflare,
+    backpack: () => (window as any).backpack,
+  };
+  const getWallet = walletMap[provider];
+  const wallet = getWallet?.();
+  if (!wallet) throw new Error(`${provider} not installed`);
+  const resp = await (wallet as any).connect();
+  return resp.publicKey.toString();
+}
+
+async function connectEVM(provider: WalletProvider): Promise<string> {
+  let eth: any = null;
+
+  switch (provider) {
+    case 'metamask':
+      eth = (window as any).ethereum?.isMetaMask
+        ? (window as any).ethereum
+        : (window as any).ethereum?.providers?.find((p: any) => p.isMetaMask);
+      break;
+    case 'coinbase':
+      eth = (window as any).ethereum?.isCoinbaseWallet
+        ? (window as any).ethereum
+        : (window as any).ethereum?.providers?.find((p: any) => p.isCoinbaseWallet);
+      break;
+    case 'okx':
+      eth = (window as any).okxwallet;
+      break;
+    case 'rabby':
+      eth = (window as any).ethereum?.isRabby
+        ? (window as any).ethereum
+        : (window as any).ethereum?.providers?.find((p: any) => p.isRabby);
+      break;
+    case 'trust':
+      eth = (window as any).trustwallet || (window as any).ethereum;
+      break;
+    case 'binance':
+      eth = (window as any).BinanceChain;
+      break;
+    case 'walletconnect':
+      eth = (window as any).ethereum;
+      break;
+    case 'ledger':
+      eth = (window as any).ethereum;
+      break;
+    default:
+      eth = (window as any).ethereum;
+  }
+
+  if (!eth) throw new Error(`${provider} not installed`);
+  const accounts: string[] = await eth.request({ method: 'eth_requestAccounts' });
+  if (!accounts[0]) throw new Error('No account returned');
+  return accounts[0];
+}
+
+/* ── component ─────────────────────────────────────────────────── */
+
 export function WalletModal({ open, onClose }: WalletModalProps) {
   const t = useTranslations();
   const setSession = useWalletStore((s) => s.setSession);
   const queryClient = useQueryClient();
+  const [connecting, setConnecting] = useState<WalletProvider | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   if (!open) return null;
 
   async function handleConnect(provider: WalletProvider) {
-    const meta = WALLET_META[provider];
-    // Mock connect: in production, wire to @orderly.network/hooks useConnect()
-    const mockAddress =
-      meta.network === 'solana'
-        ? `${Math.random().toString(36).slice(2, 10)}...${Math.random().toString(36).slice(2, 6)}`
-        : `0x${Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+    setConnecting(provider);
+    setError(null);
 
-    const mockAccountId = `0x${Array.from({ length: 40 }, () =>
-      Math.floor(Math.random() * 16).toString(16),
-    ).join('')}` as `0x${string}`;
+    try {
+      const meta = WALLET_META[provider];
+      const isSolana = meta.network === 'solana';
 
-    const session = {
-      provider,
-      providerName: meta.name,
-      address: mockAddress,
-      network: meta.network,
-      balance: 12450.8,
-      orderlyAccountId: mockAccountId,
-      orderlyKey: `ed25519:${Math.random().toString(36).slice(2, 34)}`,
-      connectedAt: Date.now(),
-      expiresAt: Date.now() + 24 * 60 * 60 * 1000,
-    };
+      // Real wallet connection via browser extension APIs
+      const address = isSolana
+        ? await connectSolana(provider)
+        : await connectEVM(provider);
 
-    await fetch('/api/session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(session),
-    });
+      const session = {
+        provider,
+        providerName: meta.name,
+        address,
+        network: meta.network,
+        balance: 0,
+        orderlyAccountId: `0x${'0'.repeat(40)}` as \`0x${string}\`,
+        orderlyKey: '',
+        connectedAt: Date.now(),
+        expiresAt: Date.now() + 24 * 60 * 60 * 1000,
+      };
 
-    setSession(session);
-    queryClient.invalidateQueries({ queryKey: ['session'] });
-    broadcastSession();
-    onClose();
+      await fetch('/api/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(session),
+      });
+
+      setSession(session);
+      queryClient.invalidateQueries({ queryKey: ['session'] });
+      broadcastSession();
+      onClose();
+    } catch (err: any) {
+      const msg = err?.message || 'Connection failed';
+      if (msg.includes('not installed')) {
+        setError(`${WALLET_META[provider].name} is not installed. Please install the extension and try again.`);
+      } else if (msg.includes('User rejected') || msg.includes('user rejected')) {
+        setError('Connection cancelled.');
+      } else {
+        setError(msg);
+      }
+    } finally {
+      setConnecting(null);
+    }
   }
 
   return (
     <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
       onClick={onClose}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(5,8,13,0.88)',
-        backdropFilter: 'blur(10px)',
-        zIndex: 1000,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-        animation: 'fadeIn 0.2s',
-      }}
     >
+      {/* backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+      {/* modal */}
       <div
+        className="relative w-full max-w-sm mx-4 mb-4 sm:mb-0 rounded-2xl bg-[#1a1a2e] border border-white/10 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
-        style={{ position: 'relative' }}
       >
-        <div
-          style={{
-            background: 'var(--bg-card)',
-            border: '1px solid var(--border-strong)',
-            borderRadius: 'var(--radius-lg)',
-            padding: 32,
-            maxWidth: 480,
-            width: '100%',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
-            animation: 'slideUp 0.25s',
-          }}
-        >
+        {/* header */}
+        <div className="flex items-center justify-between px-5 pt-5 pb-3">
+          <h2 className="text-lg font-semibold text-white">
+            {t('wallet.connectWallet')}
+          </h2>
           <button
             onClick={onClose}
-            style={{
-              position: 'absolute',
-              top: 16,
-              right: 16,
-              color: 'var(--text-muted)',
-              fontSize: 22,
-              lineHeight: 1,
-              width: 28,
-              height: 28,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              background: 'none',
-              border: 'none',
-            }}
+            className="text-white/50 hover:text-white transition-colors text-xl leading-none"
+            aria-label="Close"
           >
-            ×
+            &times;
           </button>
-          <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 6, letterSpacing: '-0.01em' }}>
-            {t('wallet.title')}
-          </h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 24 }}>
-            {t('wallet.sub')}
-          </p>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8,
-              maxHeight: '60vh',
-              overflowY: 'auto',
-              paddingRight: 4,
-              marginRight: -4,
-            }}
-          >
-            {WALLETS_ORDERED.map((w) => (
+        </div>
+
+        {/* error banner */}
+        {error && (
+          <div className="mx-5 mb-2 px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 text-sm">
+            {error}
+          </div>
+        )}
+
+        {/* wallet list */}
+        <div className="px-3 pb-5 max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10">
+          {WALLETS_ORDERED.map((w) => {
+            const isConnecting = connecting === w.id;
+            return (
               <button
                 key={w.id}
-                onClick={() => handleConnect(w.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  padding: 14,
-                  background: 'var(--bg-elev)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius)',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.15s',
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget;
-                  el.style.borderColor = 'var(--cyan)';
-                  el.style.background = 'rgba(0,229,255,0.04)';
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget;
-                  el.style.borderColor = 'var(--border)';
-                  el.style.background = 'var(--bg-elev)';
-                }}
+                disabled={connecting !== null}
+                onClick={() => handleConnect(w.id as WalletProvider)}
+                className="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-colors disabled:opacity-50"
               >
-                <div
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 8,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 800,
-                    fontSize: 14,
-                    flexShrink: 0,
-                    ...WALLET_LOGO_STYLES[w.id],
-                  }}
+                <span
+                  className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm ${
+                    WALLET_LOGO_STYLES[w.id] ?? 'bg-white/10'
+                  }`}
                 >
                   {w.init}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>
-                    {w.name}
-                  </div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{w.sub}</div>
-                </div>
-                <span style={{ color: 'var(--text-muted)', fontSize: 18 }}>→</span>
+                </span>
+                <span className="flex flex-col items-start">
+                  <span className="text-white text-sm font-medium">
+                    {isConnecting ? 'Connecting...' : w.name}
+                  </span>
+                  <span className="text-white/40 text-xs">{w.sub}</span>
+                </span>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </div>
   );
-}
+        }
