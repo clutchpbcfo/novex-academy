@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { Profile } from '@/types';
 
 const DEFAULT_PROFILE: Profile = {
@@ -7,7 +8,7 @@ const DEFAULT_PROFILE: Profile = {
   bio: '',
   avatarBg: 'cyan-purple',
   avatarInitials: '',
-  avatarEmoji: '⚡',
+  avatarEmoji: '🥷',
 };
 
 interface ProfileStore {
@@ -15,7 +16,14 @@ interface ProfileStore {
   setProfile: (profile: Profile) => void;
 }
 
-export const useProfileStore = create<ProfileStore>((set) => ({
-  profile: DEFAULT_PROFILE,
-  setProfile: (profile) => set({ profile }),
-}));
+export const useProfileStore = create<ProfileStore>()(
+  persist(
+    (set) => ({
+      profile: DEFAULT_PROFILE,
+      setProfile: (profile) => set({ profile }),
+    }),
+    {
+      name: 'novex-profile',
+    },
+  ),
+);
