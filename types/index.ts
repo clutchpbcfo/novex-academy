@@ -53,6 +53,10 @@ export interface BlobTrader {
   badges: string[];
   rank: number;
   trades?: number;
+    bestStreak?: number;
+    bestTrade?: number;
+    profitDays?: number;
+    uniquePairs?: number;
 }
 
 export interface Module {
