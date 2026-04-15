@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import type { LeaderboardEntry, BlobTrader } from '@/types';
 
 const BLOB_BASE =
   process.env.NEXT_PUBLIC_BLOB_BASE ??
@@ -18,14 +17,17 @@ const GRADIENT_POOL = [
   'linear-gradient(135deg,#f6851b,#ff6b35)',
 ];
 
+/* ---------- helpers ---------- */
+
 function walletToGradient(wallet: string): string {
+  if (!wallet) return GRADIENT_POOL[0];
   const last2 = wallet.slice(-2);
   const idx = parseInt(last2, 16);
   return GRADIENT_POOL[isNaN(idx) ? 0 : idx % GRADIENT_POOL.length];
 }
 
 function shortAddr(addr: string): string {
-  if (!addr || addr.length < 10) return addr;
+  if (!addr || addr.length < 10) return addr ?? '???';
   return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
 }
 
@@ -35,6 +37,40 @@ function toInitials(name: string): string {
   if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
   return name.slice(0, 2).toUpperCase();
 }
+
+/* ---------- Blob shape (actual field names from traders.json) ---------- */
+
+interface BlobTrader {
+  wallet_address: string;
+  username: string | null;
+  rank: number;
+  total_nxp: number;
+  weekly_nxp: number;
+  all_time_pnl: number;
+  alltime_pnl?: number;
+  win_rate: number;
+  lifetime_volume: number;
+  total_trades: number;
+  tier: string;
+  badges: string[];
+}
+
+/* ---------- Response shape ---------- */
+
+interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  handle: string;
+  avatarBg: string;
+  avatarInitials: string;
+  wallet: string;
+  pnl: number;
+  nxp: number;
+  wr: number;
+  trend: string;
+}
+
+/* ---------- GET handler ---------- */
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -49,18 +85,18 @@ export async function GET(req: NextRequest) {
 
     const traders: BlobTrader[] = await res.json();
 
-    const entries: LeaderboardEntry[] = traders.map((trader) => ({
-      rank: trader.rank ?? 0,
-      name: trader.username || shortAddr(trader.wallet),
-      handle: trader.username
-        ? trader.username.toLowerCase().replace(/[\s]+/g, '.')
-        : shortAddr(trader.wallet),
-      avatarBg: walletToGradient(trader.wallet),
-      avatarInitials: toInitials(trader.username || trader.wallet),
-      wallet: trader.wallet,
-      pnl: trader.pnl ?? 0,
-      nxp: trader.nxp ?? 0,
-      wr: trader.wr ?? 0,
+    const entries: LeaderboardEntry[] = traders.map((t) => ({
+      rank: t.rank ?? 0,
+      name: t.username || shortAddr(t.wallet_address),
+      handle: t.username
+        ? t.username.toLowerCase().replace(/[\s]+/g, '.')
+        : shortAddr(t.wallet_address),
+      avatarBg: walletToGradient(t.wallet_address),
+      avatarInitials: toInitials(t.username || t.wallet_address),
+      wallet: t.wallet_address,
+      pnl: t.all_time_pnl ?? t.alltime_pnl ?? 0,
+      nxp: t.total_nxp ?? 0,
+      wr: t.win_rate ?? 0,
       trend: '+0%',
     }));
 
