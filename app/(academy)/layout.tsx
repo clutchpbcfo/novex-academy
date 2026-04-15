@@ -2,17 +2,16 @@
 
 import { Ticker } from '@/components/academy/ticker';
 import { NavBar } from '@/components/academy/navbar';
-import { WalletModal } from '@/components/modals/wallet-modal';
 import { useSession } from '@/hooks/use-session';
 import { useWalletStore } from '@/lib/state/use-wallet-store';
 import { useQueryClient } from '@tanstack/react-query';
 import { broadcastSession } from '@/lib/wallet/bridge';
+import { DynamicWidget, useDynamicContext } from '@dynamic-labs/sdk-react-core';
 
 export default function AcademyLayout({ children }: { children: React.ReactNode }) {
   const setSession = useWalletStore((s) => s.setSession);
-  const walletModalOpen = useWalletStore((s) => s.walletModalOpen);
-  const setWalletModalOpen = useWalletStore((s) => s.setWalletModalOpen);
   const queryClient = useQueryClient();
+  const { setShowAuthFlow } = useDynamicContext();
 
   // Hydrate session on mount
   useSession();
@@ -28,12 +27,10 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Ticker />
       <NavBar
-        onConnect={() => setWalletModalOpen(true)}
+        onConnect={() => setShowAuthFlow(true)}
         onDisconnect={handleDisconnect}
       />
-      <main style={{ flex: 1 }}>
-        {children}
-      </main>
+      <main style={{ flex: 1 }}>{children}</main>
       <footer
         style={{
           borderTop: '1px solid var(--border)',
@@ -45,7 +42,7 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
         }}
       >
         © 2026 Novex Finance.{' '}
-        <a href="https://novex.finance" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
+        <a href="https://novex.finance" style={{ color: 'var(--text-secondary)', textDecoration: 'none', marginLeft: 10 }}>
           Terminal
         </a>
         <a href="/academy" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
@@ -55,7 +52,9 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
           Vault
         </a>
       </footer>
-      <WalletModal open={walletModalOpen} onClose={() => setWalletModalOpen(false)} />
+      <div className="hidden" aria-hidden>
+        <DynamicWidget />
+      </div>
     </div>
   );
 }
