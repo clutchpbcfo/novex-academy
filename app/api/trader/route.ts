@@ -39,6 +39,10 @@ export async function GET(req: NextRequest) {
       badges: raw.badges ?? [],
       rank: raw.rank ?? 0,
       trades: raw.total_trades ?? raw.trades ?? 0,
+            bestStreak: raw.max_profit_streak ?? raw.max_streak ?? 0,
+            bestTrade: raw.max_single_trade ?? 0,
+            profitDays: raw.profitable_days ?? 0,
+            uniquePairs: raw.unique_pairs ?? 0,
     };
 
     return NextResponse.json(mapped);
