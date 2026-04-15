@@ -17,20 +17,30 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
   const { profile, setProfile } = useProfileStore();
   const [form, setForm] = useState<Profile>({ ...profile });
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!open) return null;
 
   async function handleSave() {
     setSaving(true);
+    setError(null);
     try {
       const res = await fetch('/api/profile', {
-        method: 'PUT',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
+
+      if (!res.ok) {
+        throw new Error(`Save failed (${res.status})`);
+      }
+
       const updated = await res.json() as Profile;
       setProfile(updated);
       onClose();
+    } catch (err: any) {
+      console.error('[ProfileEditor] Save error:', err);
+      setError(err?.message || 'Failed to save profile');
     } finally {
       setSaving(false);
     }
@@ -103,12 +113,28 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
           >
             ×
           </button>
+
           <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 6 }}>
             {t('vault.edit.title')}
           </h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 24 }}>
             {t('vault.edit.sub')}
           </p>
+
+          {/* Error banner */}
+          {error && (
+            <div style={{
+              marginBottom: 16,
+              padding: '10px 14px',
+              borderRadius: 'var(--radius-sm)',
+              background: 'rgba(255,59,48,0.12)',
+              border: '1px solid rgba(255,59,48,0.3)',
+              color: '#ff6b6b',
+              fontSize: 13,
+            }}>
+              {error}
+            </div>
+          )}
 
           {/* Emoji avatar picker */}
           <div style={{ marginBottom: 20 }}>
@@ -147,8 +173,14 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
               value={form.displayName}
               maxLength={20}
               onChange={(e) => setForm((f) => ({ ...f, displayName: e.target.value }))}
-              onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,229,255,0.1)'; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = ''; }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--cyan)';
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,229,255,0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.boxShadow = '';
+              }}
             />
             <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>{t('vault.edit.nameHint')}</div>
           </div>
@@ -161,8 +193,12 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
               value={form.handle}
               maxLength={24}
               onChange={(e) => setForm((f) => ({ ...f, handle: e.target.value.toLowerCase() }))}
-              onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--cyan)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)';
+              }}
             />
           </div>
 
@@ -175,8 +211,12 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
               maxLength={140}
               placeholder={t('vault.edit.bioPh')}
               onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
-              onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--cyan)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)';
+              }}
             />
           </div>
 
@@ -189,8 +229,12 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
                 value={form.twitter ?? ''}
                 placeholder="@handle"
                 onChange={(e) => setForm((f) => ({ ...f, twitter: e.target.value }))}
-                onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; }}
-                onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--cyan)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                }}
               />
             </div>
             <div>
@@ -200,8 +244,12 @@ export function ProfileEditorModal({ open, onClose }: ProfileEditorModalProps) {
                 value={form.tradingView ?? ''}
                 placeholder="TV username"
                 onChange={(e) => setForm((f) => ({ ...f, tradingView: e.target.value }))}
-                onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--cyan)'; }}
-                onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--cyan)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                }}
               />
               <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>For private indicator access</div>
             </div>

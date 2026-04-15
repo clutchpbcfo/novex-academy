@@ -7,11 +7,18 @@ let MOCK_PROFILE: Profile = {
   bio: 'Regime-aware perp trader. Only choppy, only premium. SENSEI v7.7 on 5m.',
   avatarBg: 'cyan-purple',
   avatarInitials: 'CL',
+  avatarEmoji: '🥷',
   twitter: '@clutch_novex',
   tradingView: '',
 };
 
 export async function GET() {
+  return NextResponse.json(MOCK_PROFILE);
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json() as Partial<Profile>;
+  MOCK_PROFILE = { ...MOCK_PROFILE, ...body };
   return NextResponse.json(MOCK_PROFILE);
 }
 
