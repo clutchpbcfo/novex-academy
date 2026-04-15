@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useProfileStore } from '@/lib/state/use-profile-store';
 import type { Profile } from '@/types';
 
-const EMOJI_AVATARS = ['⚡', '🔥', '🚀', '💎', '🐋', '🏰', '⚔️', '👑', '🛸', '🎯', '🧠', '🐼', '💀', '🌊', '🦅', '🎮'];
+const EMOJI_AVATARS = ['⚡', '🔥', '🚀', '💎', '🐋', '🏰', '⚔️', '👑', '🛸', '🎯', '🧠', '🐼', '💀', '🌊', '🦅', '🎮', '🥷'];
 
 interface ProfileEditorModalProps {
   open: boolean;
