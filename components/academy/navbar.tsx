@@ -179,7 +179,7 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
             />
             <span style={{ fontSize: 18 }}>{emoji}</span>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--green)', fontWeight: 700 }}>
-              {shortAddr(session.address)}
+              {shortAddr(session?.address ?? "")}
             </span>
           </button>
         ) : (

@@ -17,16 +17,31 @@ export async function GET(req: NextRequest) {
     const res = await fetch(`${BLOB_BASE}/traders.json`, {
       next: { revalidate: 300 },
     });
-
     if (!res.ok) throw new Error(`Blob fetch failed: ${res.status}`);
 
-    const traders: BlobTrader[] = await res.json();
-
-    const trader = traders.find(
-      (t) => t.wallet.toLowerCase() === wallet.toLowerCase(),
+    const traders: any[] = await res.json();
+    const raw = traders.find(
+      (t) => (t.wallet_address ?? t.wallet ?? '').toLowerCase() === wallet.toLowerCase(),
     );
 
-    return NextResponse.json(trader ?? null);
+    if (!raw) return NextResponse.json(null);
+
+    // Map blob fields to BlobTrader shape
+    const mapped: BlobTrader = {
+      wallet: raw.wallet_address ?? raw.wallet ?? wallet,
+      username: raw.username ?? '',
+      nxp: raw.total_nxp ?? raw.nxp ?? 0,
+      tier: raw.tier ?? 'Rookie',
+      volume: raw.lifetime_volume ?? raw.volume ?? 0,
+      pnl: raw.all_time_pnl ?? raw.alltime_pnl ?? raw.pnl ?? 0,
+      wr: raw.win_rate ?? raw.wr ?? 0,
+      activeDays: raw.active_days ?? raw.activeDays ?? 0,
+      badges: raw.badges ?? [],
+      rank: raw.rank ?? 0,
+      trades: raw.total_trades ?? raw.trades ?? 0,
+    };
+
+    return NextResponse.json(mapped);
   } catch (err) {
     console.error('[trader] fetch error:', err);
     return NextResponse.json(
