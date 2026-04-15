@@ -51,9 +51,9 @@ export default function DashboardPage() {
             overflow: 'hidden',
           }}
         >
-          {session && (
+          {session?.address && (
             <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 8 }}>
-              {t('dash.welcome')}, <b style={{ color: 'var(--cyan)' }}>{session.address.slice(0, 6)}…</b>
+              {t('dash.welcome')}, <b style={{ color: 'var(--cyan)' }}>{(session?.address ?? '').slice(0, 6)}…</b>
             </div>
           )}
           <h1
