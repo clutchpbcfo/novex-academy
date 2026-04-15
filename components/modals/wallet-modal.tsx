@@ -38,7 +38,7 @@ async function connectSolana(provider: WalletProvider): Promise<string> {
   };
   const getWallet = walletMap[provider];
   const wallet = getWallet?.();
-  if (!wallet) throw new Error(`${provider} not installed`);
+  if (!wallet) throw new Error(provider + ' not installed');
   const resp = await (wallet as any).connect();
   return resp.publicKey.toString();
 }
@@ -81,7 +81,7 @@ async function connectEVM(provider: WalletProvider): Promise<string> {
       eth = (window as any).ethereum;
   }
 
-  if (!eth) throw new Error(`${provider} not installed`);
+  if (!eth) throw new Error(provider + ' not installed');
   const accounts: string[] = await eth.request({ method: 'eth_requestAccounts' });
   if (!accounts[0]) throw new Error('No account returned');
   return accounts[0];
@@ -111,13 +111,15 @@ export function WalletModal({ open, onClose }: WalletModalProps) {
         ? await connectSolana(provider)
         : await connectEVM(provider);
 
+      const zeroAddr = ('0x' + '0'.repeat(40)) as any;
+
       const session = {
         provider,
         providerName: meta.name,
         address,
         network: meta.network,
         balance: 0,
-        orderlyAccountId: `0x${'0'.repeat(40)}` as \`0x${string}\`,
+        orderlyAccountId: zeroAddr,
         orderlyKey: '',
         connectedAt: Date.now(),
         expiresAt: Date.now() + 24 * 60 * 60 * 1000,
@@ -136,7 +138,7 @@ export function WalletModal({ open, onClose }: WalletModalProps) {
     } catch (err: any) {
       const msg = err?.message || 'Connection failed';
       if (msg.includes('not installed')) {
-        setError(`${WALLET_META[provider].name} is not installed. Please install the extension and try again.`);
+        setError(WALLET_META[provider].name + ' is not installed. Please install the extension and try again.');
       } else if (msg.includes('User rejected') || msg.includes('user rejected')) {
         setError('Connection cancelled.');
       } else {
@@ -193,9 +195,7 @@ export function WalletModal({ open, onClose }: WalletModalProps) {
                 className="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-colors disabled:opacity-50"
               >
                 <span
-                  className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm ${
-                    WALLET_LOGO_STYLES[w.id] ?? 'bg-white/10'
-                  }`}
+                  className={'flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm ' + (WALLET_LOGO_STYLES[w.id] || 'bg-white/10')}
                 >
                   {w.init}
                 </span>
@@ -212,4 +212,4 @@ export function WalletModal({ open, onClose }: WalletModalProps) {
       </div>
     </div>
   );
-        }
+            }
