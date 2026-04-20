@@ -20,14 +20,14 @@
     "welcome": "おかえりなさい",
     "heroTitle1": "トレーダーの実戦書、",
     "heroTitle2": "レジーム対応・フリート検証済み。",
-    "heroSub": "Novex アカデミーでは実際のトレーディングフリートを動かす仕組みを学びます。SENSEI の 12 次元シグナル、フリート合意、そしてオペレーター昇格までを体系化。",
+    "heroSub": "Novex アカデミーでは実際のトレーディングフリートを動かす仕組みを学びます。SENSEI の 12 次元シグナル、フリート合意、そして CIO チップ (Chief Investment Officer) への昇格までを体系化。",
     "continue": "学習を続ける →",
     "openTerminal": "ターミナルを開く",
     "progress": "進捗",
     "ofComplete": "レッスン完了",
     "viewVault": "ヴォルトを見る →",
     "curriculumEyebrow": "カリキュラム",
-    "curriculumTitle": "オペレーターへの5モジュール",
+    "curriculumTitle": "CIO への 5 モジュール",
     "viewAll": "すべて表示 →"
   },
   "academy": {
@@ -88,7 +88,7 @@
     }
   },
   "lb": {
-    "eyebrow": "トップオペレーター",
+    "eyebrow": "トップトレーダー",
     "title": "ランキング",
     "sub": "Novex フリートからのリアルタイム順位。5分毎更新。",
     "pnl": "PnL",
@@ -96,7 +96,7 @@
     "wr": "勝率",
     "you": "YOU",
     "rank": "順位",
-    "operator": "オペレーター"
+    "operator": "CIO"
   },
   "wallet": {
     "title": "ウォレット接続",
