@@ -20,14 +20,14 @@
     "welcome": "Bem-vindo de volta",
     "heroTitle1": "O manual do trader,",
     "heroTitle2": "consciente do regime e verificado pela frota.",
-    "heroSub": "Novex Academy ensina o sistema exato que impulsiona nossa frota de trading ao vivo. Domine as 12 dimensões de sinal SENSEI e alcance o nível Operator.",
+    "heroSub": "Novex Academy ensina o sistema exato que impulsiona nossa frota de trading ao vivo. Domine as 12 dimensões de sinal SENSEI, entenda o consenso da frota e alcance o chip CIO (Chief Investment Officer).",
     "continue": "Continuar aprendendo →",
     "openTerminal": "Abrir Terminal",
     "progress": "Seu progresso",
     "ofComplete": "lições concluídas",
     "viewVault": "Ver Cofre →",
     "curriculumEyebrow": "O Currículo",
-    "curriculumTitle": "5 módulos até o nível Operator",
+    "curriculumTitle": "5 módulos até CIO",
     "viewAll": "Ver tudo →"
   },
   "academy": {
@@ -88,7 +88,7 @@
     }
   },
   "lb": {
-    "eyebrow": "Top Operadores",
+    "eyebrow": "Melhores Traders",
     "title": "Ranking",
     "sub": "Rankings ao vivo da frota Novex. Atualizado a cada 5 minutos.",
     "pnl": "PnL",
@@ -96,7 +96,7 @@
     "wr": "Taxa de Acerto",
     "you": "VOCÊ",
     "rank": "Nível",
-    "operator": "Operador"
+    "operator": "CIO"
   },
   "wallet": {
     "title": "Conectar carteira",
