@@ -146,15 +146,15 @@ export const MODULES: Module[] = [
     num: '05',
     title: 'Graduation',
     tag: 'Certification',
-    desc: 'Final exam. 25 questions covering the full curriculum. Pass with 80%+ to unlock Operator rank.',
+    desc: 'Final exam. 25 questions covering the full curriculum. Pass with 80%+ to earn your CIO chip.',
     duration: '30 min',
     lessons: 1,
     tier: 'final',
     isExam: true,
     items: [
       {
-        t: 'The Operator Exam',
-        body: `<p>25 scenario-based questions pulled from real trade logs. You'll have 30 minutes. Pass threshold: 80%.</p><p>Passing unlocks:</p><ul><li>Operator rank (shows in leaderboard)</li><li>Access to fleet OVERRIDE mode on the terminal</li><li>Discord Operator channel</li><li>500 NXP bonus</li></ul><div class="callout">Retakes allowed after 24h. Ten attempts total — make them count.</div>`,
+        t: 'The CIO Exam',
+        body: `<p>25 scenario-based questions pulled from real trade logs. You'll have 30 minutes. Pass threshold: 80%.</p><p>Passing unlocks:</p><ul><li>CIO chip (shows in leaderboard)</li><li>Access to fleet OVERRIDE mode on the terminal</li><li>Discord CIO channel</li><li>500 NXP bonus</li></ul><div class="callout">Retakes allowed after 24h. Ten attempts total — make them count.</div>`,
       },
     ],
     quiz: null,

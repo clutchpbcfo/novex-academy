@@ -41,7 +41,7 @@ export function ExamView({ onExit }: ExamViewProps) {
         fetch('/api/progress/award', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'operator', nxp: OPERATOR_EXAM.nxpAward }),
+          body: JSON.stringify({ type: 'cio', nxp: OPERATOR_EXAM.nxpAward }),
         }).catch(() => {});
       }
     }
@@ -72,7 +72,7 @@ export function ExamView({ onExit }: ExamViewProps) {
               marginBottom: 6,
             }}
           >
-            Operator Exam · Result
+            CIO Exam · Result
           </div>
           <h1
             style={{
@@ -88,7 +88,7 @@ export function ExamView({ onExit }: ExamViewProps) {
           <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 24 }}>
             You answered {score}/{total} correct ({pct}%).{' '}
             {passed
-              ? `Operator rank unlocked. +${OPERATOR_EXAM.nxpAward} NXP awarded.`
+              ? `CIO chip earned. +${OPERATOR_EXAM.nxpAward} NXP awarded.`
               : `${passNeeded}/${total} required. Retakes allowed after 24h.`}
           </p>
 
@@ -208,7 +208,7 @@ export function ExamView({ onExit }: ExamViewProps) {
               letterSpacing: '0.14em',
             }}
           >
-            Operator Exam · Question {idx + 1} / {total}
+            CIO Exam · Question {idx + 1} / {total}
           </div>
           <div
             style={{
