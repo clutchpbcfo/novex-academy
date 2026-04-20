@@ -20,14 +20,14 @@
     "welcome": "다시 오셨군요",
     "heroTitle1": "트레이더의 플레이북,",
     "heroTitle2": "레짐 인식, 플릿 검증.",
-    "heroSub": "Novex 아카데미는 실제 트레이딩 플릿을 구동하는 정확한 시스템을 가르칩니다. SENSEI의 12가지 신호 차원을 마스터하고 Operator 랭크에 올라서세요.",
+    "heroSub": "Novex 아카데미는 실제 트레이딩 플릿을 구동하는 정확한 시스템을 가르칩니다. SENSEI의 12가지 신호 차원을 마스터하고, 플릿 합의를 이해하며, CIO 칩 (Chief Investment Officer) 에 올라서세요.",
     "continue": "계속 학습 →",
     "openTerminal": "터미널 열기",
     "progress": "진행 상황",
     "ofComplete": "강의 완료",
     "viewVault": "볼트 보기 →",
     "curriculumEyebrow": "커리큘럼",
-    "curriculumTitle": "Operator 랭크까지 5개 모듈",
+    "curriculumTitle": "CIO까지 5개 모듈",
     "viewAll": "전체 보기 →"
   },
   "academy": {
@@ -88,7 +88,7 @@
     }
   },
   "lb": {
-    "eyebrow": "탑 오퍼레이터",
+    "eyebrow": "톱 트레이더",
     "title": "리더보드",
     "sub": "Novex 플릿 실시간 랭킹. 5분마다 업데이트.",
     "pnl": "PnL",
@@ -96,7 +96,7 @@
     "wr": "승률",
     "you": "나",
     "rank": "랭크",
-    "operator": "오퍼레이터"
+    "operator": "CIO"
   },
   "wallet": {
     "title": "지갑 연결",
