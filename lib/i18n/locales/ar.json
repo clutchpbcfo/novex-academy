@@ -20,14 +20,14 @@
     "welcome": "مرحباً بعودتك",
     "heroTitle1": "دليل المتداول،",
     "heroTitle2": "واعٍ بالنظام ومُتحقق من الأسطول.",
-    "heroSub": "أكاديمية Novex تعلّمك النظام الدقيق الذي يشغّل أسطول التداول الحي. أتقن أبعاد إشارة SENSEI الـ 12 وارتقِ إلى رتبة Operator.",
+    "heroSub": "أكاديمية Novex تعلّمك النظام الدقيق الذي يشغّل أسطول التداول الحي. أتقن أبعاد إشارة SENSEI الـ 12، افهم إجماع الأسطول، وارتقِ إلى شريحة CIO (Chief Investment Officer).",
     "continue": "متابعة التعلم →",
     "openTerminal": "فتح المحطة",
     "progress": "تقدمك",
     "ofComplete": "دروس مكتملة",
     "viewVault": "عرض الخزينة →",
     "curriculumEyebrow": "المنهج",
-    "curriculumTitle": "5 وحدات حتى رتبة Operator",
+    "curriculumTitle": "5 وحدات حتى CIO",
     "viewAll": "عرض الكل →"
   },
   "academy": {
@@ -88,7 +88,7 @@
     }
   },
   "lb": {
-    "eyebrow": "أفضل المشغلين",
+    "eyebrow": "أفضل المتداولين",
     "title": "المتصدرون",
     "sub": "تصنيفات مباشرة من أسطول Novex. يُحدَّث كل 5 دقائق.",
     "pnl": "PnL",
@@ -96,7 +96,7 @@
     "wr": "معدل الفوز",
     "you": "أنت",
     "rank": "الرتبة",
-    "operator": "المشغّل"
+    "operator": "CIO"
   },
   "wallet": {
     "title": "ربط محفظة",
