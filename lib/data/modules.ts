@@ -154,7 +154,7 @@ export const MODULES: Module[] = [
     items: [
       {
         t: 'The CIO Exam',
-        body: `<p>25 scenario-based questions pulled from real trade logs. You'll have 30 minutes. Pass threshold: 80%.</p><p>Passing unlocks:</p><ul><li>CIO chip (shows in leaderboard)</li><li>Access to fleet OVERRIDE mode on the terminal</li><li>Discord CIO channel</li><li>500 NXP bonus</li></ul><div class="callout">Retakes allowed after 24h. Ten attempts total — make them count.</div>`,
+        body: `<p>25 scenario-based questions pulled from real trade logs. You'll have 30 minutes. Pass threshold: 80%.</p><p>Passing unlocks:</p><ul><li>CIO chip (shows in leaderboard)</li><li>Access to fleet OVERRIDE mode on the terminal</li><li>Discord CIO channel</li><li>160 NXP bonus</li></ul><div class="callout">Retakes allowed after 24h. Ten attempts total — make them count.</div>`,
       },
     ],
     quiz: null,
