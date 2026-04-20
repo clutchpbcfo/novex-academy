@@ -20,14 +20,14 @@
     "welcome": "欢迎回来",
     "heroTitle1": "交易员的操盘手册，",
     "heroTitle2": "感知市场形态，已由舰队验证。",
-    "heroSub": "Novex 学院传授驱动我们实盘交易舰队的精确系统。掌握 SENSEI 的 12 个信号维度，理解舰队共识，晋升 Operator 等级。",
+    "heroSub": "Novex 学院传授驱动我们实盘交易舰队的精确系统。掌握 SENSEI 的 12 个信号维度，理解舰队共识，晋升 CIO 芯片（Chief Investment Officer）。",
     "continue": "继续学习 →",
     "openTerminal": "打开终端",
     "progress": "学习进度",
     "ofComplete": "课程已完成",
     "viewVault": "查看金库 →",
     "curriculumEyebrow": "课程体系",
-    "curriculumTitle": "5个模块达到 Operator 等级",
+    "curriculumTitle": "5 个模块达到 CIO",
     "viewAll": "查看全部 →"
   },
   "academy": {
@@ -88,7 +88,7 @@
     }
   },
   "lb": {
-    "eyebrow": "顶级操作员",
+    "eyebrow": "顶级交易员",
     "title": "排行榜",
     "sub": "来自 Novex 舰队的实时排名。每5分钟更新。",
     "pnl": "PnL",
@@ -96,7 +96,7 @@
     "wr": "胜率",
     "you": "我",
     "rank": "排名",
-    "operator": "操作员"
+    "operator": "CIO"
   },
   "wallet": {
     "title": "连接钱包",
