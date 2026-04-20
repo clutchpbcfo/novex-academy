@@ -130,7 +130,7 @@ export default function VaultPage() {
               <div style={{ fontSize: 11, color: 'var(--cyan)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 4 }}>
                 Curriculum Progress
               </div>
-              <div style={{ fontSize: 18, fontWeight: 800 }}>0 / {totalLessons}</div>
+              <div style={{ fontSize: 18, fontWeight: 800 }}>{completedLessons} / {totalLessons}</div>
               <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>
                 Connect wallet to track progress
               </div>
