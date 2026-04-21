@@ -10,10 +10,11 @@ import { useTrader } from '@/hooks/use-trader';
 import { BridgeBanner } from '@/components/academy/bridge-banner';
 import { StatCard } from '@/components/academy/stat-card';
 import { TradeRow } from '@/components/academy/trade-row';
-import { BadgeCard } from '@/components/academy/badge-card';
 import { PnlChart } from '@/components/academy/pnl-chart';
 import { ProfileEditorModal } from '@/components/modals/profile-editor-modal';
-import { BADGES } from '@/lib/data/badges';
+import { BadgeLockedGrid } from '@/components/badges/BadgeLockedGrid';
+import { ACADEMY_BADGES } from '@/lib/badges/canon';
+import { normalizeBadges } from '@/lib/badges/normalize';
 import { MODULES } from '@/lib/data/modules';
 import { useQuery } from '@tanstack/react-query';
 import type { Trade } from '@/types';
@@ -169,6 +170,8 @@ export default function VaultPage() {
   const wr = trader?.wr ?? 0;
   const volume = trader?.volume ?? 0;
   const trades2 = trader?.trades ?? 0;
+  const traderRec = trader as unknown as { badges?: unknown };
+  const earnedBadgeIds = normalizeBadges(traderRec?.badges);
 
   return (
     <div style={{ maxWidth: 1340, margin: '0 auto', padding: '32px 28px 80px' }}>
@@ -420,21 +423,14 @@ export default function VaultPage() {
             </div>
           </div>
 
-          {/* Achievements */}
+          {/* Achievements — 48-badge canon via BadgeLockedGrid */}
           <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 22 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
               <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                 {t('vault.achievements')}
               </span>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                {BADGES.filter((b) => b.earned).length}/{BADGES.length} {t('vault.locked')}
-              </span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: 10 }}>
-              {BADGES.map((badge, i) => (
-                <BadgeCard key={i} badge={badge} />
-              ))}
-            </div>
+            <BadgeLockedGrid allBadges={ACADEMY_BADGES} earnedIds={earnedBadgeIds} />
           </div>
         </div>
       </div>
