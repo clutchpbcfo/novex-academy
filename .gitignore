@@ -11,3 +11,4 @@ coverage/
 .handoff/
 tsconfig.tsbuildinfo
 .vercel
+.env.blob
