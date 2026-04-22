@@ -138,6 +138,7 @@ export default function VaultPage() {
             </div>
           </div>
         </div>
+        <BadgeLockedGrid allBadges={ACADEMY_BADGES} earnedIds={[]} />
         <ProfileEditorModal open={profileOpen} onClose={() => setProfileOpen(false)} />
       </div>
     );
