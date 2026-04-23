@@ -5,6 +5,7 @@ import { SUPPORTED_LOCALES, RTL_LOCALES } from '@/lib/i18n/langs';
 import type { SupportedLocale } from '@/lib/i18n/langs';
 import './globals.css';
 
+import BugReportFab from "@/components/BugReportFab";
 export const metadata: Metadata = {
   title: 'Novex Academy',
   description: "The trader's playbook — regime-aware and fleet-verified.",
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Providers locale={locale} messages={messages}>
           {children}
         </Providers>
+        <BugReportFab />
       </body>
     </html>
   );
