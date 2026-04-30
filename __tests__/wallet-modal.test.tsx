@@ -49,9 +49,15 @@ describe('WalletModal', () => {
     // Modal title text was removed in a prior UI refresh; assert the
     // modal opened by checking that at least one wallet provider is
     // rendered. Loose regex so adding a provider doesn't break the test.
-    expect(
-      screen.getByText(/trust wallet|ledger|phantom|metamask|coinbase|walletconnect/i),
-    ).toBeInTheDocument();
+    // The modal renders multiple providers at once, so getByText
+    // throws on the regex (multiple matches). Use getAllByText
+    // and assert we got at least one provider rendered — that
+    // confirms the modal opened cleanly without locking the test
+    // to a specific provider list.
+    const providers = screen.getAllByText(
+      /trust wallet|ledger|phantom|metamask|coinbase|walletconnect/i,
+    );
+    expect(providers.length).toBeGreaterThan(0);
   });
 
   it('shows all 11 wallet options', () => {
