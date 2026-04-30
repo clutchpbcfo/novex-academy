@@ -1,77 +1,82 @@
 /**
- * app/api/equity/route.ts
+ * app/api/equity/route.ts  (v2 — widened payload + types)
  *
  * Live equity passthrough. Reads ctn-api.novex.finance/api/state and
- * shapes it to the `EquityCurve` interface the academy components
- * already consume.
+ * shapes it to a richer EquityResponse.
  *
- * Source of truth: `account_value` field returned by the bot's
- * `/v1/positions` Orderly call (USDC + unsettled PnL + open MTM).
+ * v2 changes vs the original passthrough:
+ *   - Accepts the bot's actual `equity_curve` shape (array of
+ *     `{t, v}` snapshots, not `number[]`). Old narrow `number[]`
+ *     declaration was wrong at runtime.
+ *   - Surfaces peak_portfolio, drawdown_pct, daily_pnl,
+ *     daily_trades, open_position_count, mode — all useful for
+ *     dashboard widgets.
+ *   - Computes `drawdown` from peak vs total when the bot didn't
+ *     send drawdown_pct directly.
+ *
+ * On upstream failure we return an empty curve with `stale: true`.
+ *
+ * Source of truth: `account_value` field returned by /v1/positions.
  * See memory: `reference_orderly_account_value.md`.
- *
- * On upstream failure we return an empty curve with `stale: true` so
- * the UI can render the skeleton and a small "stale" indicator
- * instead of a 500 page.
  */
 
 import { NextResponse } from 'next/server';
 import { fetchCtn } from '@/lib/ctn/fetch';
-import type { EquityCurve } from '@/types';
+import type { CtnState, EquityPoint, EquityResponse } from '@/lib/ctn/types';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-interface CtnState {
-  ts?: number;
-  portfolio?: number;
-  account_value?: number;
-  peak_portfolio?: number;
-  drawdown_pct?: number;
-  daily_pnl?: number;
-  daily_trades?: number;
-  open_position_count?: number;
-  mode?: string;
-  equity_curve?: number[];
+function pickTotal(state: CtnState): number {
+  if (typeof state.account_value === 'number') return state.account_value;
+  if (typeof state.portfolio === 'number') return state.portfolio;
+  return 0;
+}
+
+function pickPoints(state: CtnState, total: number): EquityPoint[] {
+  if (Array.isArray(state.equity_curve) && state.equity_curve.length > 0) {
+    return state.equity_curve;
+  }
+  return total > 0 ? [total] : [];
+}
+
+function pickPct(total: number, peak: number, sentDd?: number): number {
+  if (typeof sentDd === 'number') return Number(sentDd.toFixed(2));
+  if (peak > 0 && total > 0) {
+    return Number((((total - peak) / peak) * 100).toFixed(2));
+  }
+  return 0;
 }
 
 export async function GET() {
   try {
     const state = await fetchCtn<CtnState>('/api/state');
-
-    const total =
-      typeof state.account_value === 'number'
-        ? state.account_value
-        : typeof state.portfolio === 'number'
-          ? state.portfolio
-          : 0;
-
-    const points: number[] = Array.isArray(state.equity_curve)
-      ? state.equity_curve
-      : total > 0
-        ? [total]
-        : [];
-
+    const total = pickTotal(state);
     const peak = state.peak_portfolio ?? total;
-    const pct =
-      peak > 0 && total > 0 ? Number((((total - peak) / peak) * 100).toFixed(2)) : 0;
+    const pct = pickPct(total, peak, state.drawdown_pct);
 
-    const payload: EquityCurve & { stale?: boolean; ts?: number; mode?: string } = {
-      points,
+    const payload: EquityResponse = {
+      points: pickPoints(state, total),
       total,
       pct,
-      ts: state.ts,
+      drawdown: pct,
+      peak,
+      dailyPnl: state.daily_pnl,
+      dailyTrades: state.daily_trades,
+      openPositions: state.open_position_count,
       mode: state.mode,
+      ts: state.ts,
     };
-
     return NextResponse.json(payload);
   } catch (err) {
     console.warn('[api/equity] ctn-api unreachable:', String(err));
-    return NextResponse.json(
-      { points: [], total: 0, pct: 0, stale: true } satisfies EquityCurve & {
-        stale: boolean;
-      },
-      { status: 200 },
-    );
+    const stale: EquityResponse = {
+      points: [],
+      total: 0,
+      pct: 0,
+      stale: true,
+    };
+    return NextResponse.json(stale, { status: 200 });
   }
 }

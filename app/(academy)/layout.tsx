@@ -94,6 +94,12 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
         <a href="/academy" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
           Academy
         </a>
+        <a href="/briefs" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
+          Briefs
+        </a>
+        <a href="/sensei" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
+          Sensei
+        </a>
         <a href="/vault" style={{ color: 'var(--text-secondary)', textDecoration: 'none', margin: '0 10px' }}>
           Vault
         </a>
