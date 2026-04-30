@@ -38,10 +38,18 @@ export function ExamView({ onExit }: ExamViewProps) {
       );
       const passed = score >= passNeeded;
       if (passed) {
+        // Use the Canon-validated exam_pass shape so CIO_BADGE_ID is
+        // actually minted server-side. The legacy 'cio' shape on
+        // the award route is a no-op stub kept only for back-compat.
+        const scorePct = Math.round((score / total) * 100);
         fetch('/api/progress/award', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'cio', nxp: OPERATOR_EXAM.nxpAward }),
+          body: JSON.stringify({
+            type: 'exam_pass',
+            scorePct,
+            nxp: OPERATOR_EXAM.nxpAward,
+          }),
         }).catch(() => {});
       }
     }

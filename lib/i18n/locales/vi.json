@@ -1,1 +1,111 @@
-{"nav":{"home":"Trang chủ","academy":"Học viện","vault":"Két","leaderboard":"BXH","terminal":"Terminal ↗","nxp":"NXP","rank":"Hạng","connect":"Kết nối Ví"},"bridge":{"live":"Cầu đang hoạt động.","liveDesc":"Ví của bạn đã đồng bộ với terminal — sang novex.finance trực tiếp.","once":"Kết nối một lần.","onceDesc":"Ví mở khóa cả Học viện và Terminal — không cần xác thực lại.","cta":"Mở Terminal ↗"},"dash":{"welcome":"Chào mừng trở lại","heroTitle1":"Sổ tay của trader,","heroTitle2":"nhận biết thị trường, đã kiểm định.","heroSub":"Novex Academy dạy chính hệ thống đang vận hành đội trade thực tế. Thành thạo 12 chiều tín hiệu SENSEI, hiểu sự đồng thuận của đội và đạt chip CIO (Chief Investment Officer).","continue":"Tiếp tục học →","openTerminal":"Mở Terminal","progress":"Tiến độ","ofComplete":"bài đã hoàn thành","viewVault":"Xem Két →","curriculumEyebrow":"Giáo trình","curriculumTitle":"5 module đến CIO","viewAll":"Xem tất cả →"},"academy":{"eyebrow":"Giáo trình Novex","title":"Học viện","sub":"5 module · 18 bài. Xây quanh hệ thống trade thực.","back":"← Về Học viện","backTo":"← Quay lại","lessons":"bài","done":"✓ XONG","start":"BẮT ĐẦU →","module":"MODULE","lesson":"Bài","knowledge":"Kiểm tra","correct":"✓ Đúng. ","wrong":"✗ Chưa đúng. ","prev":"← Trước","next":"Bài tiếp →","finish":"Hoàn thành module"},"vault":{"eyebrow":"Két của bạn","title":"Trung tâm Điều hành Cá nhân","sub":"Thống kê, PnL, NXP, danh tính — tất cả một chỗ.","premium":"Trader Premium","rank":"Hạng","novexXp":"Novex XP","toLegendary":"XP đến hạng Huyền thoại","editProfile":"✎ Sửa hồ sơ","totalPnl":"PnL Tổng","winRate":"Tỷ lệ thắng","avgR":"R trung bình","bestStreak":"Chuỗi tốt nhất","totalTrades":"Tổng lệnh","sharpe":"Sharpe","maxDd":"DD tối đa","graduation":"Tốt nghiệp","equityCurve":"Đường vốn","cumulative":"30 ngày · 142 lệnh ·","recentTrades":"Lệnh gần đây","fullJournal":"Sổ đầy đủ ↗","achievements":"Thành tựu","locked":"đang khóa","edit":{"title":"Sửa hồ sơ","sub":"Hiện trong BXH, terminal và két.","avatar":"Avatar","name":"Tên hiển thị","nameHint":"Tối đa 20 ký tự. Hiện trên BXH.","initials":"Chữ cái đầu","handle":"Handle","bio":"Bio","bioPh":"Một dòng về phong cách","twitter":"Twitter / X","tradingView":"TradingView","cancel":"Hủy","save":"Lưu"}},"lb":{"eyebrow":"Top Trader","title":"BXH","sub":"BXH trực tiếp từ đội Novex. Cập nhật mỗi 5 phút.","pnl":"PnL","nxp":"NXP","wr":"Tỷ lệ thắng","you":"BẠN","rank":"Hạng","operator":"CIO"},"wallet":{"title":"Kết nối ví","sub":"Một kết nối. Dùng cho Học viện và Terminal."},"lang":{"label":"Ngôn ngữ"}}
+{
+  "nav": {
+    "home": "Trang chủ",
+    "academy": "Học viện",
+    "vault": "Két",
+    "leaderboard": "BXH",
+    "terminal": "Terminal ↗",
+    "nxp": "NXP",
+    "rank": "Hạng",
+    "connect": "Kết nối Ví",
+    "briefs": "Briefs",
+    "sensei": "Sensei",
+    "openTerminal": "Open Terminal"
+  },
+  "bridge": {
+    "live": "Cầu đang hoạt động.",
+    "liveDesc": "Ví của bạn đã đồng bộ với terminal — sang novex.finance trực tiếp.",
+    "once": "Kết nối một lần.",
+    "onceDesc": "Ví mở khóa cả Học viện và Terminal — không cần xác thực lại.",
+    "cta": "Mở Terminal ↗"
+  },
+  "dash": {
+    "welcome": "Chào mừng trở lại",
+    "heroTitle1": "Sổ tay của trader,",
+    "heroTitle2": "nhận biết thị trường, đã kiểm định.",
+    "heroSub": "Novex Academy dạy chính hệ thống đang vận hành đội trade thực tế. Thành thạo 12 chiều tín hiệu SENSEI, hiểu sự đồng thuận của đội và đạt chip CIO (Chief Investment Officer).",
+    "continue": "Tiếp tục học →",
+    "openTerminal": "Mở Terminal",
+    "progress": "Tiến độ",
+    "ofComplete": "bài đã hoàn thành",
+    "viewVault": "Xem Két →",
+    "curriculumEyebrow": "Giáo trình",
+    "curriculumTitle": "5 module đến CIO",
+    "viewAll": "Xem tất cả →"
+  },
+  "academy": {
+    "eyebrow": "Giáo trình Novex",
+    "title": "Học viện",
+    "sub": "5 module · 18 bài. Xây quanh hệ thống trade thực.",
+    "back": "← Về Học viện",
+    "backTo": "← Quay lại",
+    "lessons": "bài",
+    "done": "✓ XONG",
+    "start": "BẮT ĐẦU →",
+    "module": "MODULE",
+    "lesson": "Bài",
+    "knowledge": "Kiểm tra",
+    "correct": "✓ Đúng. ",
+    "wrong": "✗ Chưa đúng. ",
+    "prev": "← Trước",
+    "next": "Bài tiếp →",
+    "finish": "Hoàn thành module"
+  },
+  "vault": {
+    "eyebrow": "Két của bạn",
+    "title": "Trung tâm Điều hành Cá nhân",
+    "sub": "Thống kê, PnL, NXP, danh tính — tất cả một chỗ.",
+    "premium": "Trader Premium",
+    "rank": "Hạng",
+    "novexXp": "Novex XP",
+    "toLegendary": "XP đến hạng Huyền thoại",
+    "editProfile": "✎ Sửa hồ sơ",
+    "totalPnl": "PnL Tổng",
+    "winRate": "Tỷ lệ thắng",
+    "avgR": "R trung bình",
+    "bestStreak": "Chuỗi tốt nhất",
+    "totalTrades": "Tổng lệnh",
+    "sharpe": "Sharpe",
+    "maxDd": "DD tối đa",
+    "graduation": "Tốt nghiệp",
+    "equityCurve": "Đường vốn",
+    "cumulative": "30 ngày · 142 lệnh ·",
+    "recentTrades": "Lệnh gần đây",
+    "fullJournal": "Sổ đầy đủ ↗",
+    "achievements": "Thành tựu",
+    "locked": "đang khóa",
+    "edit": {
+      "title": "Sửa hồ sơ",
+      "sub": "Hiện trong BXH, terminal và két.",
+      "avatar": "Avatar",
+      "name": "Tên hiển thị",
+      "nameHint": "Tối đa 20 ký tự. Hiện trên BXH.",
+      "initials": "Chữ cái đầu",
+      "handle": "Handle",
+      "bio": "Bio",
+      "bioPh": "Một dòng về phong cách",
+      "twitter": "Twitter / X",
+      "tradingView": "TradingView",
+      "cancel": "Hủy",
+      "save": "Lưu"
+    }
+  },
+  "lb": {
+    "eyebrow": "Top Trader",
+    "title": "BXH",
+    "sub": "BXH trực tiếp từ đội Novex. Cập nhật mỗi 5 phút.",
+    "pnl": "PnL",
+    "nxp": "NXP",
+    "wr": "Tỷ lệ thắng",
+    "you": "BẠN",
+    "rank": "Hạng",
+    "operator": "CIO"
+  },
+  "wallet": {
+    "title": "Kết nối ví",
+    "sub": "Một kết nối. Dùng cho Học viện và Terminal."
+  },
+  "lang": {
+    "label": "Ngôn ngữ"
+  }
+}

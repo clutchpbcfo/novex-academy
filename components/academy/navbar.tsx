@@ -17,6 +17,8 @@ interface NavBarProps {
 const NAV_LINKS = [
   { href: '/', tKey: 'nav.home' },
   { href: '/academy', tKey: 'nav.academy' },
+  { href: '/briefs', tKey: 'nav.briefs' },
+  { href: '/sensei', tKey: 'nav.sensei' },
   { href: '/vault', tKey: 'nav.vault' },
   { href: '/leaderboard', tKey: 'nav.leaderboard' },
 ] as const;
@@ -96,21 +98,35 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
             );
           })}
           <a
-            href="https://novex.finance"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="https://novex.finance/terminal"
+            data-novex-cta="open-terminal"
             style={{
-              color: 'var(--gold)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              color: '#000',
+              background: 'linear-gradient(135deg, var(--gold), #FFB800)',
               padding: '8px 14px',
-              fontSize: 13,
-              fontWeight: 600,
-              letterSpacing: '0.02em',
+              fontSize: 12,
+              fontWeight: 800,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
               borderRadius: 'var(--radius-sm)',
               textDecoration: 'none',
               transition: 'all 0.15s',
+              boxShadow: '0 0 0 1px rgba(255,215,0,0.3)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                '0 0 14px rgba(255,215,0,0.45), 0 0 0 1px rgba(255,215,0,0.6)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                '0 0 0 1px rgba(255,215,0,0.3)';
             }}
           >
-            {t('nav.terminal')}
+            {t('nav.openTerminal')}
+            <span aria-hidden style={{ fontSize: 13 }}>→</span>
           </a>
         </div>
       </div>

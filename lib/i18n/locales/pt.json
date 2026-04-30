@@ -7,7 +7,10 @@
     "terminal": "Terminal ↗",
     "nxp": "NXP",
     "rank": "Nível",
-    "connect": "Conectar Carteira"
+    "connect": "Conectar Carteira",
+    "briefs": "Briefs",
+    "sensei": "Sensei",
+    "openTerminal": "Open Terminal"
   },
   "bridge": {
     "live": "Ponte ativa.",

@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { Ticker } from '@/components/academy/ticker';
 import { NavBar } from '@/components/academy/navbar';
+import { MobileTabs } from '@/components/academy/mobile-tabs';
 import { useSession } from '@/hooks/use-session';
 import { useWalletStore } from '@/lib/state/use-wallet-store';
 import { useQueryClient } from '@tanstack/react-query';
@@ -100,6 +101,7 @@ export default function AcademyLayout({ children }: { children: React.ReactNode 
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', opacity: 0 }} aria-hidden>
         <DynamicWidget />
       </div>
+      <MobileTabs />
     </div>
   );
 }

@@ -1,1 +1,111 @@
-{"nav":{"home":"Nyumbani","academy":"Akademia","vault":"Hazina","leaderboard":"Orodha ya Waongozi","terminal":"Terminali ↗","nxp":"NXP","rank":"Cheo","connect":"Unganisha Pochi"},"bridge":{"live":"Daraja lipo.","liveDesc":"Pochi yako imesawazishwa na terminali ya biashara — nenda novex.finance moja kwa moja.","once":"Unganisha mara moja.","onceDesc":"Pochi yako inafungua Akademia na Terminali pamoja — bila kuthibitisha tena.","cta":"Fungua Terminali ↗"},"dash":{"welcome":"Karibu tena","heroTitle1":"Mwongozo wa mfanyabiashara,","heroTitle2":"anayejua hali ya soko na kuthibitishwa na kikundi.","heroSub":"Novex Academy inafundisha mfumo unaoendesha kikundi chetu cha biashara moja kwa moja. Bwana vipimo 12 vya ishara za SENSEI, elewa makubaliano ya kikundi, na fikia chipu ya CIO (Chief Investment Officer).","continue":"Endelea kujifunza →","openTerminal":"Fungua Terminali","progress":"Maendeleo yako","ofComplete":"masomo yamekamilika","viewVault":"Angalia Hazina →","curriculumEyebrow":"Mitaala","curriculumTitle":"Moduli 5 hadi CIO","viewAll":"Angalia zote →"},"academy":{"eyebrow":"Mitaala ya Novex","title":"Akademia","sub":"Moduli 5 · Masomo 18. Yalijengwa juu ya mfumo halisi wa biashara.","back":"← Rudi Akademia","backTo":"← Rudi","lessons":"masomo","done":"✓ IMEKAMILIKA","start":"ANZA →","module":"MODULI","lesson":"Somo","knowledge":"Ukaguzi","correct":"✓ Sahihi. ","wrong":"✗ Sivyo. ","prev":"← Nyuma","next":"Somo lijalo →","finish":"Maliza moduli"},"vault":{"eyebrow":"Hazina yako","title":"Kituo cha Amri Kibinafsi","sub":"Takwimu zako, PnL, NXP, na utambulisho — vyote mahali pamoja.","premium":"Mfanyabiashara Premium","rank":"Cheo","novexXp":"Novex XP","toLegendary":"XP hadi cheo cha Hadithi","editProfile":"✎ Hariri Wasifu","totalPnl":"PnL Jumla","winRate":"Kiwango cha Ushindi","avgR":"R Wastani","bestStreak":"Mfululizo Bora","totalTrades":"Biashara Jumla","sharpe":"Sharpe","maxDd":"DD ya Juu","graduation":"Uhitimu","equityCurve":"Mkondo wa Mtaji","cumulative":"Jumla ya siku 30 · biashara 142 ·","recentTrades":"Biashara za Hivi Karibuni","fullJournal":"Jarida kamili ↗","achievements":"Mafanikio","locked":"vimefungwa","edit":{"title":"Hariri Wasifu","sub":"Unaonekana kwenye orodha, terminali na hazina.","avatar":"Avata","name":"Jina la kuonyeshwa","nameHint":"Juu ya herufi 20. Linaonekana kwenye orodha.","initials":"Herufi za mwanzo","handle":"Handle","bio":"Wasifu","bioPh":"Mstari mmoja kuhusu mtindo wako","twitter":"Twitter / X","tradingView":"TradingView","cancel":"Ghairi","save":"Hifadhi"}},"lb":{"eyebrow":"Wauzaji Bora","title":"Orodha ya Waongozi","sub":"Orodha ya moja kwa moja ya kikundi cha Novex. Inasasishwa kila dakika 5.","pnl":"PnL","nxp":"NXP","wr":"Ushindi","you":"WEWE","rank":"Cheo","operator":"CIO"},"wallet":{"title":"Unganisha pochi","sub":"Muunganisho mmoja. Unafanya kazi Akademia na Terminali."},"lang":{"label":"Lugha"}}
+{
+  "nav": {
+    "home": "Nyumbani",
+    "academy": "Akademia",
+    "vault": "Hazina",
+    "leaderboard": "Orodha ya Waongozi",
+    "terminal": "Terminali ↗",
+    "nxp": "NXP",
+    "rank": "Cheo",
+    "connect": "Unganisha Pochi",
+    "briefs": "Briefs",
+    "sensei": "Sensei",
+    "openTerminal": "Open Terminal"
+  },
+  "bridge": {
+    "live": "Daraja lipo.",
+    "liveDesc": "Pochi yako imesawazishwa na terminali ya biashara — nenda novex.finance moja kwa moja.",
+    "once": "Unganisha mara moja.",
+    "onceDesc": "Pochi yako inafungua Akademia na Terminali pamoja — bila kuthibitisha tena.",
+    "cta": "Fungua Terminali ↗"
+  },
+  "dash": {
+    "welcome": "Karibu tena",
+    "heroTitle1": "Mwongozo wa mfanyabiashara,",
+    "heroTitle2": "anayejua hali ya soko na kuthibitishwa na kikundi.",
+    "heroSub": "Novex Academy inafundisha mfumo unaoendesha kikundi chetu cha biashara moja kwa moja. Bwana vipimo 12 vya ishara za SENSEI, elewa makubaliano ya kikundi, na fikia chipu ya CIO (Chief Investment Officer).",
+    "continue": "Endelea kujifunza →",
+    "openTerminal": "Fungua Terminali",
+    "progress": "Maendeleo yako",
+    "ofComplete": "masomo yamekamilika",
+    "viewVault": "Angalia Hazina →",
+    "curriculumEyebrow": "Mitaala",
+    "curriculumTitle": "Moduli 5 hadi CIO",
+    "viewAll": "Angalia zote →"
+  },
+  "academy": {
+    "eyebrow": "Mitaala ya Novex",
+    "title": "Akademia",
+    "sub": "Moduli 5 · Masomo 18. Yalijengwa juu ya mfumo halisi wa biashara.",
+    "back": "← Rudi Akademia",
+    "backTo": "← Rudi",
+    "lessons": "masomo",
+    "done": "✓ IMEKAMILIKA",
+    "start": "ANZA →",
+    "module": "MODULI",
+    "lesson": "Somo",
+    "knowledge": "Ukaguzi",
+    "correct": "✓ Sahihi. ",
+    "wrong": "✗ Sivyo. ",
+    "prev": "← Nyuma",
+    "next": "Somo lijalo →",
+    "finish": "Maliza moduli"
+  },
+  "vault": {
+    "eyebrow": "Hazina yako",
+    "title": "Kituo cha Amri Kibinafsi",
+    "sub": "Takwimu zako, PnL, NXP, na utambulisho — vyote mahali pamoja.",
+    "premium": "Mfanyabiashara Premium",
+    "rank": "Cheo",
+    "novexXp": "Novex XP",
+    "toLegendary": "XP hadi cheo cha Hadithi",
+    "editProfile": "✎ Hariri Wasifu",
+    "totalPnl": "PnL Jumla",
+    "winRate": "Kiwango cha Ushindi",
+    "avgR": "R Wastani",
+    "bestStreak": "Mfululizo Bora",
+    "totalTrades": "Biashara Jumla",
+    "sharpe": "Sharpe",
+    "maxDd": "DD ya Juu",
+    "graduation": "Uhitimu",
+    "equityCurve": "Mkondo wa Mtaji",
+    "cumulative": "Jumla ya siku 30 · biashara 142 ·",
+    "recentTrades": "Biashara za Hivi Karibuni",
+    "fullJournal": "Jarida kamili ↗",
+    "achievements": "Mafanikio",
+    "locked": "vimefungwa",
+    "edit": {
+      "title": "Hariri Wasifu",
+      "sub": "Unaonekana kwenye orodha, terminali na hazina.",
+      "avatar": "Avata",
+      "name": "Jina la kuonyeshwa",
+      "nameHint": "Juu ya herufi 20. Linaonekana kwenye orodha.",
+      "initials": "Herufi za mwanzo",
+      "handle": "Handle",
+      "bio": "Wasifu",
+      "bioPh": "Mstari mmoja kuhusu mtindo wako",
+      "twitter": "Twitter / X",
+      "tradingView": "TradingView",
+      "cancel": "Ghairi",
+      "save": "Hifadhi"
+    }
+  },
+  "lb": {
+    "eyebrow": "Wauzaji Bora",
+    "title": "Orodha ya Waongozi",
+    "sub": "Orodha ya moja kwa moja ya kikundi cha Novex. Inasasishwa kila dakika 5.",
+    "pnl": "PnL",
+    "nxp": "NXP",
+    "wr": "Ushindi",
+    "you": "WEWE",
+    "rank": "Cheo",
+    "operator": "CIO"
+  },
+  "wallet": {
+    "title": "Unganisha pochi",
+    "sub": "Muunganisho mmoja. Unafanya kazi Akademia na Terminali."
+  },
+  "lang": {
+    "label": "Lugha"
+  }
+}

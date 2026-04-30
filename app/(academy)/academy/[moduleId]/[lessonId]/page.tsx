@@ -8,6 +8,7 @@ import { MODULES } from '@/lib/data/modules';
 import { useProgressStore } from '@/lib/state/use-progress-store';
 import { nextUnlockedLesson } from '@/lib/progress/selectors';
 import { ExamView } from '@/components/academy/exam-view';
+import { moduleIdToKey, nxpForModule } from '@/lib/academy/canon';
 
 export default function LessonPage() {
   const t = useTranslations();
@@ -67,6 +68,26 @@ export default function LessonPage() {
 
   function handleNext() {
     handleComplete();
+
+    // Last lesson of a non-exam module → fire the module-complete
+    // award. Idempotent on the server; safe to call even if the
+    // user has already completed it. The badge mint + NXP credit
+    // happens in /api/progress/award per Canon v2.
+    if (isLastLesson && mod && !mod.isExam) {
+      const key = moduleIdToKey(modIdx);
+      if (key) {
+        fetch('/api/progress/award', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'module_complete',
+            moduleId: modIdx,
+            nxp: nxpForModule(key),
+          }),
+        }).catch(() => {});
+      }
+    }
+
     if (hasNext) {
       router.push(`/academy/${modIdx}/${lessonIdx + 1}`);
     } else {
