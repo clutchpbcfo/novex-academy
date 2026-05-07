@@ -146,3 +146,16 @@ html {
 .avatar-red-purple { background: linear-gradient(135deg, var(--red), var(--purple)); }
 .avatar-pink-orange { background: linear-gradient(135deg, #e91e63, var(--orange)); }
 .avatar-blue-cyan { background: linear-gradient(135deg, #3b99fc, var(--cyan)); }
+
+/* ----- Mobile nav helpers ----------------------------------------------------
+   The top NavBar uses inline styles. Below 720px the MobileTabs bottom-bar
+   takes over primary navigation, so we hide the cramped desktop link strip
+   and the NXP/rank stat chips. !important is required to beat inline `display`. */
+@media (max-width: 719px) {
+  .academy-nav-hide-mobile { display: none !important; }
+  .academy-nav-padding-mobile {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    height: 52px !important;
+  }
+}

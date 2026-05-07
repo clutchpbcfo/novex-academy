@@ -36,6 +36,7 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
 
   return (
     <nav
+      className="academy-nav-padding-mobile"
       style={{
         background: 'rgba(5,8,13,0.85)',
         backdropFilter: 'blur(20px)',
@@ -74,7 +75,7 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
             NOVEX
           </span>
         </Link>
-        <div style={{ display: 'flex', gap: 2 }}>
+        <div className="academy-nav-hide-mobile" style={{ display: 'flex', gap: 2 }}>
           {NAV_LINKS.map(({ href, tKey }) => {
             const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
             return (
@@ -135,7 +136,7 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
         {session && nxp !== null && (
           <>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
+            <div className="academy-nav-hide-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
               <span style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 600 }}>
                 {t('nav.nxp')}
               </span>
@@ -143,12 +144,12 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
                 {nxp.toLocaleString()}
               </span>
             </div>
-            <div style={{ width: 1, height: 26, background: 'var(--border)' }} />
+            <div className="academy-nav-hide-mobile" style={{ width: 1, height: 26, background: 'var(--border)' }} />
           </>
         )}
         {session && rank !== null && (
           <>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
+            <div className="academy-nav-hide-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
               <span style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 600 }}>
                 {t('nav.rank')}
               </span>
@@ -156,7 +157,7 @@ export function NavBar({ onConnect, onDisconnect }: NavBarProps) {
                 #{rank}
               </span>
             </div>
-            <div style={{ width: 1, height: 26, background: 'var(--border)' }} />
+            <div className="academy-nav-hide-mobile" style={{ width: 1, height: 26, background: 'var(--border)' }} />
           </>
         )}
         <LanguagePicker />
