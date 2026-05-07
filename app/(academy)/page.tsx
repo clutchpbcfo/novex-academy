@@ -28,11 +28,12 @@ export default function DashboardPage() {
   const offset = circumference - (overallPct / 100) * circumference;
 
   return (
-    <div style={{ maxWidth: 1340, margin: '0 auto', padding: '32px 28px 80px' }}>
+    <div className="academy-page-wrap" style={{ maxWidth: 1340, margin: '0 auto', padding: '32px 28px 80px' }}>
       <BridgeBanner session={session} />
 
       {/* Hero section */}
       <div
+        className="academy-dash-hero-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '1.4fr 1fr',
@@ -57,6 +58,7 @@ export default function DashboardPage() {
             </div>
           )}
           <h1
+            className="academy-page-h1"
             style={{
               fontSize: 32,
               fontWeight: 800,
@@ -130,6 +132,7 @@ export default function DashboardPage() {
 
         {/* Progress ring */}
         <div
+          className="academy-dash-progress-card"
           style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border)',

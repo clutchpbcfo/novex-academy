@@ -14,7 +14,7 @@ export default function AcademyPage() {
   const checkModuleUnlocked = useProgressStore((s) => s.isModuleUnlocked);
 
   return (
-    <div style={{ maxWidth: 1340, margin: '0 auto', padding: '32px 28px 80px' }}>
+    <div className="academy-page-wrap" style={{ maxWidth: 1340, margin: '0 auto', padding: '32px 28px 80px' }}>
       <BridgeBanner session={session} />
       <div style={{ marginBottom: 28 }}>
         <div
@@ -29,7 +29,7 @@ export default function AcademyPage() {
         >
           {t('academy.eyebrow')}
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 4 }}>
+        <h1 className="academy-page-h1" style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 4 }}>
           {t('academy.title')}
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>{t('academy.sub')}</p>
