@@ -11,6 +11,7 @@ export function BridgeBanner({ session }: BridgeBannerProps) {
   const t = useTranslations();
   return (
     <div
+      className="academy-bridge-banner"
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -36,6 +37,7 @@ export function BridgeBanner({ session }: BridgeBannerProps) {
             color: 'var(--purple)',
             fontWeight: 900,
             fontSize: 16,
+            flexShrink: 0,
           }}
         >
           ⇌
