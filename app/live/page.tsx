@@ -1,18 +1,15 @@
 // app/live/page.tsx
-// Single-page live route. P0 — Marketing OBS overlay + email drip CTAs target this URL.
-// Spec: Conductor day-2 add-on (2026-05-09). Hardened to ALWAYS return 200, even with
-// zero env vars set, so the URL is testable from the moment it deploys.
+// Hybrid server+client render. The shell + iframe + destinations are server-
+// rendered (stable, fast first paint). The pill + viewer count + uptime are
+// hosted by <LiveStateIsland> which polls /api/magnets/v1/live-state every 30s.
 //
-// - Primary embed: YouTube auto-live-stream by default (or Hermes-selected platform)
-// - Offline-state tile rendered in embed slot when no embed URL is configured/available
-// - "Live now" pill: green pulse if Hermes director state says online, else gray "Offline"
-// - Same-tab nav (Bible: no target=_blank on internal links; external links default same-tab too)
-// - Brand canon: cyan / purple / emerald / gold + dark #06070D
-// - Mobile-first; stacks below md breakpoint
-// - Footer: CTN $300→$300K hook + small CTA to /magnets + standard disclaimer
+// Decision 28: stream crash + auto-restart cycle reflects within 30s. Iframe
+// stays mounted across state changes — YouTube's embed handles offline/online
+// gracefully on its own, so we never remount and avoid a video flicker.
 
 import type { Metadata } from 'next'
-import { getLiveState, type LiveState, type StreamPlatform } from '@/lib/live/state'
+import { getLiveState, getDynamicLiveState, type LiveState, type StreamPlatform } from '@/lib/live/state'
+import { LiveStateIsland } from './live-island'
 
 export const metadata: Metadata = {
   title: 'Novex Live — CTN $300 → $300K challenge',
@@ -26,15 +23,18 @@ export const metadata: Metadata = {
   },
 }
 
-// ISR every 30s so the live indicator stays fresh without burning compute.
 export const revalidate = 30
 
 export default async function LivePage() {
-  const state = await getLiveState()
+  // Fetch BOTH in parallel: static state for shell, dynamic state to seed island.
+  const [state, dyn] = await Promise.all([getLiveState(), getDynamicLiveState()])
+  // Strip cacheSeconds — internal-only field; the API route uses it for headers.
+  const { cacheSeconds: _cs, ...islandInitial } = dyn
+
   return (
     <div className="min-h-screen bg-[#06070D] text-white">
       <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">
-        <Header state={state} />
+        <Header islandInitial={islandInitial} />
         <PrimaryStream state={state} />
         <Destinations state={state} />
         <Footer />
@@ -43,7 +43,11 @@ export default async function LivePage() {
   )
 }
 
-function Header({ state }: { state: LiveState }) {
+function Header({
+  islandInitial,
+}: {
+  islandInitial: Parameters<typeof LiveStateIsland>[0]['initial']
+}) {
   return (
     <div className="mb-6 flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
       <div>
@@ -52,28 +56,8 @@ function Header({ state }: { state: LiveState }) {
           <span className="text-[#00D4FF]">Live</span>
         </h1>
       </div>
-      <LivePill online={state.online} />
+      <LiveStateIsland initial={islandInitial} />
     </div>
-  )
-}
-
-function LivePill({ online }: { online: boolean }) {
-  if (online) {
-    return (
-      <span className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/40 bg-[#10B981]/10 px-3 py-1.5 text-sm font-semibold text-[#10B981]">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-60"></span>
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]"></span>
-        </span>
-        Live now
-      </span>
-    )
-  }
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white/50">
-      <span className="h-2 w-2 rounded-full bg-white/30"></span>
-      Offline
-    </span>
   )
 }
 
@@ -95,11 +79,8 @@ function PrimaryStream({ state }: { state: LiveState }) {
 }
 
 function OfflineTile({ watchUrl }: { watchUrl: string }) {
-  // Polished offline state. Page reads as alive even before Clutch's first stream.
-  // Marketing can drop the URL into OBS / email / threads with confidence.
   return (
     <div className="relative mb-6 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-black via-[#0a0d18] to-black shadow-2xl">
-      {/* faint radial glow for depth */}
       <div
         className="absolute inset-0 opacity-30"
         style={{
@@ -178,7 +159,6 @@ function PlatformIcon({ platform }: { platform: StreamPlatform }) {
       </svg>
     )
   }
-  // x
   return (
     <svg viewBox="0 0 24 24" className={common} aria-hidden="true">
       <path
